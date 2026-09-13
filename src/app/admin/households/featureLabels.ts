@@ -1,5 +1,5 @@
 import type { useTranslations } from "next-intl";
-import { Feature } from "@/generated/prisma/client";
+import { Feature } from "@/generated/prisma/enums";
 import { td } from "@/lib/i18n/translateDynamicKey";
 
 type Translate = ReturnType<typeof useTranslations>;
