@@ -28,6 +28,15 @@ export async function recordClientError(
   await persist({ source: ErrorLogSource.react_error_boundary, message, stack, path });
 }
 
+export function registerProcessErrorHandlers(): void {
+  process.on("uncaughtException", (err) => {
+    void recordError(err, ErrorLogSource.uncaught_exception);
+  });
+  process.on("unhandledRejection", (reason) => {
+    void recordError(reason, ErrorLogSource.unhandled_rejection);
+  });
+}
+
 async function persist(data: {
   source: ErrorLogSource;
   message: string;

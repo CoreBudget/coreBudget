@@ -11,14 +11,9 @@ export async function register() {
   const { getAccessibleHouseholds } = await import("@/lib/workspace");
   const { syncNotificationsForUser } = await import("@/lib/notifications");
   const { sendPushNotification } = await import("@/lib/pushService");
-  const { recordError, ErrorLogSource } = await import("@/lib/errorLog");
+  const { registerProcessErrorHandlers } = await import("@/lib/errorLog");
 
-  process.on("uncaughtException", (err) => {
-    void recordError(err, ErrorLogSource.uncaught_exception);
-  });
-  process.on("unhandledRejection", (reason) => {
-    void recordError(reason, ErrorLogSource.unhandled_rejection);
-  });
+  registerProcessErrorHandlers();
 
   cron.schedule("0 3 * * *", () =>
     recordJobRun("automatic_backup", async () => {
