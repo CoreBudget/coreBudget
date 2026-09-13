@@ -1,0 +1,20 @@
+services:
+  corebudget:
+    build: .
+    image: corebudget:local
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      APP_ENCRYPTION_KEY: ${APP_ENCRYPTION_KEY:?set APP_ENCRYPTION_KEY, see docker/README.md}
+      APP_URL: ${APP_URL:?set APP_URL, see docker/README.md}
+      SESSION_SECRET: ${SESSION_SECRET:?set SESSION_SECRET, see docker/README.md}
+      # Uncomment to use an external Postgres instead of the embedded one:
+      # DATABASE_URL: postgresql://user:password@host:5432/corebudget
+    volumes:
+      - corebudget-db:/var/lib/postgresql/data
+      - corebudget-backups:/backups
+
+volumes:
+  corebudget-db:
+  corebudget-backups:

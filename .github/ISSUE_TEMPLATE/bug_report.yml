@@ -1,0 +1,58 @@
+name: Bug report
+description: Something isn't working the way it should
+labels: [bug]
+body:
+  - type: dropdown
+    id: deployment
+    attributes:
+      label: How are you running CoreBudget?
+      options:
+        - Docker image (docker run / docker compose)
+        - Local development (npm run dev)
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version / image tag
+      description: Image tag (e.g. v1.2.3, latest) or git commit if running from source
+      placeholder: v1.2.3
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: What did you do, step by step?
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: >-
+        `docker logs <container>` output, browser console errors, or anything else that looked
+        relevant. This will be rendered as a code block, so there is no need to add backticks
+        yourself.
+      render: shell

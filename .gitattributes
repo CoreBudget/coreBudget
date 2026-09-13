@@ -1,0 +1,4 @@
+* text=auto eol=lf
+
+src/generated/prisma/** linguist-generated
+package-lock.json linguist-generated

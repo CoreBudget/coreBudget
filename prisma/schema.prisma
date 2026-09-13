@@ -1,0 +1,1188 @@
+// CoreBudget Prisma schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Auth, Admin & Platform Settings
+// ─────────────────────────────────────────────────────────────────────────
+
+enum UserStatus {
+  invited
+  active
+  deactivated
+}
+
+enum ThemeMode {
+  light
+  dark
+}
+
+model User {
+  id                         String     @id @default(uuid()) @db.Uuid
+  name                       String
+  email                      String     @unique
+  passwordHash               String?
+  twoFactorSecret            String?
+  twoFactorEnabled           Boolean    @default(false)
+  isAdmin                    Boolean    @default(false)
+  status                     UserStatus @default(invited)
+  locale                     String?
+  timezone                   String?
+  dateFormatPreference       String?
+  themeMode                  ThemeMode?
+  /// Sidebar collapsible-group open/closed state, follows the user across
+  /// devices, mirroring themeMode's persistence pattern.
+  sidebarAccountsOpen        Boolean    @default(true)
+  sidebarNetWorthOpen        Boolean    @default(true)
+  /// User Preferences, personal defaults applied only as the *fallback* the first
+  /// time a given item is viewed (a brand-new account's ledger, the Plan page); anything
+  /// already explicitly saved per-item (e.g. a TransactionViewPreference row) always wins.
+  defaultLedgerSortColumn    String?
+  defaultLedgerSortDirection String?
+  defaultLedgerDatePreset    String?
+  planSectionsDefaultOpen    Boolean    @default(false)
+  budgetSectionsDefaultOpen  Boolean    @default(true)
+  /// Tour ids the user has completed or dismissed, e.g. "welcome", "page:dashboard".
+  /// Checked before auto-starting a tour; the help button's manual replay ignores it.
+  seenTours                  String[]   @default([])
+  createdAt                  DateTime   @default(now())
+  updatedAt                  DateTime   @updatedAt
+
+  sentInvites                  UserInvite[]                      @relation("InvitedBy")
+  passwordResetTokens          PasswordResetToken[]
+  sessions                     UserSession[]
+  loginHistory                 LoginHistoryEntry[]
+  householdAccess              HouseholdAccess[]
+  budgetAccess                 BudgetAccess[]
+  featurePermissions           FeaturePermission[]
+  jobs                         Job[]
+  taxSettings                  UserTaxSettings?
+  retirementAccounts           RetirementAccount[]
+  favoriteCategories           FavoriteCategory[]
+  notifications                Notification[]
+  pushSubscriptions            PushSubscription[]
+  notificationPreferences      NotificationPreference[]
+  apiTokens                    ApiToken[]
+  transactionViewPreferences   TransactionViewPreference[]
+  auditLogEntries              AuditLogEntry[]
+  pagePreferences              UserPagePreference[]
+  sidebarVisibilityPreferences UserSidebarVisibilityPreference[]
+
+  @@index([status])
+}
+
+enum InviteStatus {
+  pending
+  accepted
+  expired
+}
+
+model UserInvite {
+  id              String       @id @default(uuid()) @db.Uuid
+  email           String
+  name            String
+  tokenHash       String       @unique
+  invitedByUserId String       @db.Uuid
+  invitedBy       User         @relation("InvitedBy", fields: [invitedByUserId], references: [id])
+  expiresAt       DateTime
+  status          InviteStatus @default(pending)
+  createdAt       DateTime     @default(now())
+
+  @@index([email])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model UserSession {
+  id           String   @id @default(uuid()) @db.Uuid
+  userId       String   @db.Uuid
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  device       String?
+  ipAddress    String?
+  location     String?
+  startedAt    DateTime @default(now())
+  lastActiveAt DateTime @default(now())
+  revoked      Boolean  @default(false)
+
+  @@index([userId])
+  @@index([lastActiveAt])
+}
+
+enum LoginResult {
+  success
+  failed_password
+  failed_2fa
+}
+
+model LoginHistoryEntry {
+  id        String      @id @default(uuid()) @db.Uuid
+  userId    String      @db.Uuid
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  timestamp DateTime    @default(now())
+  ipAddress String?
+  device    String?
+  result    LoginResult
+
+  @@index([userId, timestamp])
+}
+
+/// Singleton, one row per instance.
+model PlatformSettings {
+  id                       String   @id @default(uuid()) @db.Uuid
+  defaultLocale            String   @default("en")
+  currencyCode             String   @default("USD")
+  sessionTimeoutMinutes    Int      @default(1440)
+  smtpHost                 String?
+  smtpPort                 Int?
+  smtpUser                 String?
+  smtpPasswordEncrypted    String?
+  smtpFromAddress          String?
+  backupEnabled            Boolean  @default(true)
+  backupRetentionDays      Int      @default(30)
+  vapidPublicKey           String?
+  vapidPrivateKeyEncrypted String?
+  updatedAt                DateTime @updatedAt
+}
+
+enum BackupType {
+  automatic
+  manual
+}
+
+enum BackupStatus {
+  running
+  completed
+  failed
+}
+
+/// pg_dump-based backups, encrypted at rest with
+/// APP_ENCRYPTION_KEY before being written to the backups path.
+model Backup {
+  id           String       @id @default(uuid()) @db.Uuid
+  startedAt    DateTime     @default(now())
+  completedAt  DateTime?
+  type         BackupType
+  status       BackupStatus @default(running)
+  sizeBytes    Int?
+  filename     String?
+  errorMessage String?
+
+  @@index([startedAt])
+}
+
+enum JobStatus {
+  running
+  completed
+  failed
+}
+
+/// History of the in-process node-cron jobs registered in instrumentation.ts, surfaced on
+/// the admin System Health page so a failed/silent job is visible, not just logged.
+model JobRun {
+  id           String    @id @default(uuid()) @db.Uuid
+  jobName      String
+  startedAt    DateTime  @default(now())
+  completedAt  DateTime?
+  status       JobStatus @default(running)
+  detail       String?
+  errorMessage String?
+
+  @@index([jobName, startedAt])
+}
+
+enum ErrorLogSource {
+  react_error_boundary
+  uncaught_exception
+  unhandled_rejection
+}
+
+/// Best-effort record of unexpected failures (src/lib/errorLog.ts), the app's chosen
+/// alternative to a third-party observability tool (self-hosted, no external dependency),
+/// surfaced on the admin System Health page. Written by a React error boundary
+/// (src/app/error.tsx / global-error.tsx) or a process-level uncaughtException/
+/// unhandledRejection handler (src/instrumentation.ts).
+model ErrorLog {
+  id        String         @id @default(uuid()) @db.Uuid
+  source    ErrorLogSource
+  message   String
+  stack     String?
+  path      String?
+  createdAt DateTime       @default(now())
+
+  @@index([createdAt])
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Households, Budgets & Feature Permissions (tenancy)
+// ─────────────────────────────────────────────────────────────────────────
+
+enum HouseholdRole {
+  owner
+  member
+}
+
+model Household {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  access  HouseholdAccess[]
+  budgets Budget[]
+}
+
+model HouseholdAccess {
+  id          String        @id @default(uuid()) @db.Uuid
+  userId      String        @db.Uuid
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  householdId String        @db.Uuid
+  household   Household     @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  role        HouseholdRole
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@unique([userId, householdId])
+}
+
+enum BudgetStatus {
+  active
+  archived
+}
+
+model Budget {
+  id          String       @id @default(uuid()) @db.Uuid
+  householdId String       @db.Uuid
+  household   Household    @relation(fields: [householdId], references: [id])
+  name        String
+  status      BudgetStatus @default(active)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  budgetAccess          BudgetAccess[]
+  featurePermissions    FeaturePermission[]
+  payeeAutoCategories   PayeeAutoCategory[]
+  sections              Section[]
+  categoryPlanSnapshots CategoryPlanSnapshot[]
+  accounts              Account[]
+  subscriptions         Subscription[]
+  assets                Asset[]
+  liabilities           Liability[]
+  apiTokens             ApiToken[]
+  auditLogEntries       AuditLogEntry[]
+  readyToAssign         BudgetReadyToAssign[]
+  notifications         Notification[]
+
+  @@index([householdId])
+}
+
+model BudgetAccess {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  budgetId  String   @db.Uuid
+  budget    Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, budgetId])
+}
+
+/// Config-driven, not hardcoded per-screen.
+enum Feature {
+  transactions
+  budget_envelope
+  plan
+  reports
+  repeating_transactions
+  subscriptions
+  budget_settings
+  audit_log
+  net_worth_assets
+  net_worth_liabilities
+  income_calculator
+}
+
+enum PermissionLevel {
+  read_only
+  edit
+  no_access
+}
+
+model FeaturePermission {
+  id        String          @id @default(uuid()) @db.Uuid
+  userId    String          @db.Uuid
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  budgetId  String          @db.Uuid
+  budget    Budget          @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  feature   Feature
+  level     PermissionLevel @default(no_access)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@unique([userId, budgetId, feature])
+}
+
+/// Admin-only, instance-wide kill switch, separate from FeaturePermission's per-(user,budget)
+/// grants above. A missing row means enabled (fail-open default: every feature is on until an
+/// admin explicitly disables it, see getPlatformFeatureToggles()). Not every Feature enum
+/// member is exposed as a toggle here (Budget Settings rides along with Budget; Dashboard is
+/// never toggleable, see admin/features/FeaturesPanel.tsx for the exact list shown).
+model PlatformFeatureToggle {
+  feature   Feature  @id
+  enabled   Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Payees (platform-wide, not budget/household-scoped)
+// ─────────────────────────────────────────────────────────────────────────
+
+model Payee {
+  id                 String   @id @default(uuid()) @db.Uuid
+  name               String
+  includeInList      Boolean  @default(true)
+  enableAutoCategory Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  renamingRules         PayeeRenamingRule[]
+  autoCategories        PayeeAutoCategory[]
+  transactions          Transaction[]
+  repeatingTransactions RepeatingTransaction[]
+
+  @@index([name])
+}
+
+enum PayeeMatchType {
+  contains
+  starts_with
+  ends_with
+  equals
+}
+
+model PayeeRenamingRule {
+  id        String         @id @default(uuid()) @db.Uuid
+  payeeId   String         @db.Uuid
+  payee     Payee          @relation(fields: [payeeId], references: [id], onDelete: Cascade)
+  matchType PayeeMatchType
+  pattern   String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@index([payeeId])
+}
+
+/// Per-budget auto-categorization mapping, budget-scoped even though Payee is global.
+model PayeeAutoCategory {
+  id         String   @id @default(uuid()) @db.Uuid
+  payeeId    String   @db.Uuid
+  payee      Payee    @relation(fields: [payeeId], references: [id], onDelete: Cascade)
+  budgetId   String   @db.Uuid
+  budget     Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  categoryId String   @db.Uuid
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([payeeId, budgetId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Budget Domain: Sections, Categories, Assignments
+// ─────────────────────────────────────────────────────────────────────────
+
+model Section {
+  id                  String   @id @default(uuid()) @db.Uuid
+  budgetId            String   @db.Uuid
+  budget              Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  name                String
+  isActive            Boolean  @default(true)
+  isIncome            Boolean  @default(false)
+  isSavings           Boolean  @default(false)
+  isCreditCardPayment Boolean  @default(false)
+  order               Int      @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  categories Category[]
+
+  @@index([budgetId])
+}
+
+enum TargetRepeatType {
+  monthly
+  quarterly
+  yearly
+  long_term
+}
+
+enum MonthlyFundingGoal {
+  assign_target
+  reach_target
+}
+
+model Category {
+  id                 String              @id @default(uuid()) @db.Uuid
+  sectionId          String              @db.Uuid
+  section            Section             @relation(fields: [sectionId], references: [id])
+  name               String
+  /// User-facing archive flag, forward-looking views only, never filters historical reads.
+  isActive           Boolean             @default(true)
+  /// System-generated categories only (hidden liability/credit-card-payment categories). Not user-toggleable.
+  hideFromBudget     Boolean             @default(false)
+  order              Int                 @default(0)
+  dayOfMonth         Int?
+  monthNeededBy      String?
+  targetAmount       Decimal?            @db.Decimal(14, 2)
+  targetDueDate      DateTime?           @db.Date
+  targetRepeatType   TargetRepeatType?
+  monthlyFundingGoal MonthlyFundingGoal?
+  savingsPerMonth    Decimal?            @db.Decimal(14, 2)
+  savingsPerQuarter  Decimal?            @db.Decimal(14, 2)
+  quarterlyMonths    Json?
+  savingsPerYear     Decimal?            @db.Decimal(14, 2)
+  startDate          DateTime?           @db.Date
+  notes              String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  assignments                CategoryAssignment[]
+  planSnapshots              CategoryPlanSnapshot[]
+  transactions               Transaction[]
+  transactionSplits          TransactionSplit[]
+  repeatingTransactions      RepeatingTransaction[]
+  repeatingTransactionSplits RepeatingTransactionSplit[]
+  subscriptions              Subscription[]
+  payeeAutoCategories        PayeeAutoCategory[]
+  favoritedBy                FavoriteCategory[]
+
+  @@index([sectionId])
+}
+
+/// One per category per month. `carryover`/`available` recalculated when that month's
+/// Budget view is opened, not on every write, not frozen after being written once.
+model CategoryAssignment {
+  id         String   @id @default(uuid()) @db.Uuid
+  categoryId String   @db.Uuid
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  month      String
+  assigned   Decimal  @default(0) @db.Decimal(14, 2)
+  activity   Decimal  @default(0) @db.Decimal(14, 2)
+  carryover  Decimal  @default(0) @db.Decimal(14, 2)
+  available  Decimal  @default(0) @db.Decimal(14, 2)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([categoryId, month])
+  @@index([month])
+}
+
+/// Budget-level "Ready to Assign" running balance (unassigned income), recalculated and
+/// re-persisted the same way as CategoryAssignment: amount = prior month's stored amount +
+/// this month's income-section activity - this month's total assigned across every envelope
+/// category. One per budget per month.
+model BudgetReadyToAssign {
+  id        String   @id @default(uuid()) @db.Uuid
+  budgetId  String   @db.Uuid
+  budget    Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  month     String
+  amount    Decimal  @default(0) @db.Decimal(14, 2)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([budgetId, month])
+  @@index([month])
+}
+
+/// One row per active category per month, written by a scheduled job at month start.
+model CategoryPlanSnapshot {
+  id                 String              @id @default(uuid()) @db.Uuid
+  budgetId           String              @db.Uuid
+  budget             Budget              @relation(fields: [budgetId], references: [id])
+  categoryId         String              @db.Uuid
+  category           Category            @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  month              String
+  targetAmount       Decimal?            @db.Decimal(14, 2)
+  targetRepeatType   TargetRepeatType?
+  monthlyFundingGoal MonthlyFundingGoal?
+  savingsPerMonth    Decimal?            @db.Decimal(14, 2)
+  savingsPerQuarter  Decimal?            @db.Decimal(14, 2)
+  quarterlyMonths    Json?
+  savingsPerYear     Decimal?            @db.Decimal(14, 2)
+  capturedAt         DateTime            @default(now())
+
+  @@unique([categoryId, month])
+  @@index([budgetId, month])
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Accounts, Transactions & Repeating Transactions
+// ─────────────────────────────────────────────────────────────────────────
+
+enum AccountType {
+  checking
+  savings
+  cash
+  investment
+  credit
+  line_credit
+}
+
+model Account {
+  id                 String      @id @default(uuid()) @db.Uuid
+  budgetId           String      @db.Uuid
+  budget             Budget      @relation(fields: [budgetId], references: [id])
+  name               String
+  type               AccountType
+  website            String?
+  unclearedBalance   Decimal     @default(0) @db.Decimal(14, 2)
+  clearedBalance     Decimal     @default(0) @db.Decimal(14, 2)
+  balance            Decimal     @default(0) @db.Decimal(14, 2)
+  paymentDueDay      Int?
+  reconciledDate     DateTime?
+  cardExpirationDate DateTime?   @db.Date
+  isClosed           Boolean     @default(false)
+  order              Int         @default(0)
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  transactions               Transaction[]
+  repeatingTransactions      RepeatingTransaction[]
+  subscriptions              Subscription[]
+  transactionViewPreferences TransactionViewPreference[]
+  /// Informational "paid from" reference on LiabilityPayment, never a real ledger entry here.
+  liabilityPayments          LiabilityPayment[]
+
+  @@index([budgetId])
+}
+
+model Transaction {
+  id                     String                @id @default(uuid()) @db.Uuid
+  accountId              String                @db.Uuid
+  account                Account               @relation(fields: [accountId], references: [id])
+  linkedLiabilityId      String?               @db.Uuid
+  linkedLiability        Liability?            @relation(fields: [linkedLiabilityId], references: [id])
+  postDate               DateTime              @db.Date
+  payeeId                String                @db.Uuid
+  payee                  Payee                 @relation(fields: [payeeId], references: [id])
+  categoryId             String?               @db.Uuid
+  category               Category?             @relation(fields: [categoryId], references: [id])
+  memo                   String?
+  debit                  Decimal?              @db.Decimal(14, 2)
+  credit                 Decimal?              @db.Decimal(14, 2)
+  runningBalance         Decimal               @default(0) @db.Decimal(14, 2)
+  cleared                Boolean               @default(false)
+  isSplit                Boolean               @default(false)
+  /// Split-accordion expand/collapse, shared across every viewer of this budget, not
+  /// per-user (unlike TransactionViewPreference's filters), so it acts as a genuine "how
+  /// this transaction is displayed" property of the row itself.
+  splitsCollapsed        Boolean               @default(false)
+  reconciled             Boolean               @default(false)
+  repeatingTransactionId String?               @db.Uuid
+  repeatingTransaction   RepeatingTransaction? @relation(fields: [repeatingTransactionId], references: [id])
+  isScheduled            Boolean?              @default(false)
+  /// Excludes CSV-imported/arrived-scheduled rows from every balance/activity/report aggregate until approved.
+  pendingApproval        Boolean               @default(false)
+  createdAt              DateTime              @default(now())
+  updatedAt              DateTime              @updatedAt
+
+  splits TransactionSplit[]
+
+  @@index([accountId, postDate])
+  @@index([payeeId])
+  @@index([categoryId])
+  @@index([pendingApproval])
+  @@index([isScheduled])
+}
+
+/// Splits always inherit the parent transaction's payeeId, no separate payeeId here.
+model TransactionSplit {
+  id            String      @id @default(uuid()) @db.Uuid
+  transactionId String      @db.Uuid
+  transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  categoryId    String      @db.Uuid
+  category      Category    @relation(fields: [categoryId], references: [id])
+  memo          String?
+  debit         Decimal?    @db.Decimal(14, 2)
+  credit        Decimal?    @db.Decimal(14, 2)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([transactionId])
+  @@index([categoryId])
+}
+
+enum RepeatType {
+  daily
+  weekly
+  monthly
+  every_3_months
+  every_4_months
+  every_n_weeks
+  twice_a_month
+  yearly
+}
+
+model RepeatingTransaction {
+  id                 String     @id @default(uuid()) @db.Uuid
+  accountId          String     @db.Uuid
+  account            Account    @relation(fields: [accountId], references: [id])
+  payeeId            String     @db.Uuid
+  payee              Payee      @relation(fields: [payeeId], references: [id])
+  categoryId         String?    @db.Uuid
+  category           Category?  @relation(fields: [categoryId], references: [id])
+  debit              Decimal?   @db.Decimal(14, 2)
+  credit             Decimal?   @db.Decimal(14, 2)
+  memo               String?
+  repeatType         RepeatType
+  /// Used when repeatType = every_n_weeks. Also backs Subscriptions' arbitrary weekly cadences.
+  intervalWeeks      Int?
+  nextOccurrenceDate DateTime   @db.Date
+  lastCreatedDate    DateTime?  @db.Date
+  isActive           Boolean    @default(true)
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+
+  generatedTransactions Transaction[]
+  splits                RepeatingTransactionSplit[]
+  subscription          Subscription?
+
+  @@index([accountId])
+  @@index([isActive, nextOccurrenceDate])
+}
+
+/// Split template for a repeating transaction, mirrors TransactionSplit,
+/// carried through to each generated Transaction's own splits at creation time.
+model RepeatingTransactionSplit {
+  id                     String               @id @default(uuid()) @db.Uuid
+  repeatingTransactionId String               @db.Uuid
+  repeatingTransaction   RepeatingTransaction @relation(fields: [repeatingTransactionId], references: [id], onDelete: Cascade)
+  categoryId             String               @db.Uuid
+  category               Category             @relation(fields: [categoryId], references: [id])
+  memo                   String?
+  debit                  Decimal?             @db.Decimal(14, 2)
+  credit                 Decimal?             @db.Decimal(14, 2)
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+
+  @@index([repeatingTransactionId])
+}
+
+/// Server-side persisted filter preferences, per user per account.
+model TransactionViewPreference {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountId String   @db.Uuid
+  account   Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  filters   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, accountId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Subscriptions & Memberships
+// ─────────────────────────────────────────────────────────────────────────
+
+enum SubscriptionCadence {
+  monthly
+  quarterly
+  yearly
+  every_n_weeks
+}
+
+enum SubscriptionStatus {
+  active
+  paused
+  canceled
+}
+
+model Subscription {
+  id                     String               @id @default(uuid()) @db.Uuid
+  budgetId               String               @db.Uuid
+  budget                 Budget               @relation(fields: [budgetId], references: [id])
+  name                   String
+  website                String?
+  cadence                SubscriptionCadence
+  /// Only when cadence = every_n_weeks.
+  intervalWeeks          Int?
+  amount                 Decimal              @db.Decimal(14, 2)
+  renewalDate            DateTime             @db.Date
+  autoRenew              Boolean              @default(true)
+  accountId              String               @db.Uuid
+  account                Account              @relation(fields: [accountId], references: [id])
+  categoryId             String?              @db.Uuid
+  category               Category?            @relation(fields: [categoryId], references: [id])
+  status                 SubscriptionStatus   @default(active)
+  trialEndDate           DateTime?            @db.Date
+  notes                  String?
+  repeatingTransactionId String               @unique @db.Uuid
+  repeatingTransaction   RepeatingTransaction @relation(fields: [repeatingTransactionId], references: [id])
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+
+  priceChanges SubscriptionPriceChange[]
+
+  @@index([budgetId])
+  @@index([accountId])
+}
+
+/// Price updates append rather than overwrite, preserving history (mirrors AssetValueChange).
+model SubscriptionPriceChange {
+  id             String       @id @default(uuid()) @db.Uuid
+  subscriptionId String       @db.Uuid
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  date           DateTime     @db.Date
+  amount         Decimal      @db.Decimal(14, 2)
+  notes          String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([subscriptionId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Net Worth: Assets & Liabilities
+// ─────────────────────────────────────────────────────────────────────────
+
+enum AssetType {
+  property
+  land
+  vehicle
+  investment
+  other
+}
+
+model Asset {
+  id           String    @id @default(uuid()) @db.Uuid
+  budgetId     String    @db.Uuid
+  budget       Budget    @relation(fields: [budgetId], references: [id])
+  name         String
+  type         AssetType
+  /// Denormalized "current value", kept in sync with the latest AssetValueChange.
+  value        Decimal   @db.Decimal(14, 2)
+  description  String?
+  purchaseDate DateTime? @db.Date
+  order        Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  valueChanges AssetValueChange[]
+
+  @@index([budgetId])
+}
+
+model AssetValueChange {
+  id          String   @id @default(uuid()) @db.Uuid
+  assetId     String   @db.Uuid
+  asset       Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  date        DateTime @db.Date
+  value       Decimal  @db.Decimal(14, 2)
+  description String?
+  createdAt   DateTime @default(now())
+
+  @@index([assetId, date])
+}
+
+enum LiabilityType {
+  mortgage
+  auto_loan
+  student_loan
+  medical_debt
+  personal_loan
+}
+
+model Liability {
+  id                 String        @id @default(uuid()) @db.Uuid
+  budgetId           String        @db.Uuid
+  budget             Budget        @relation(fields: [budgetId], references: [id])
+  name               String
+  type               LiabilityType
+  startingBalance    Decimal       @db.Decimal(14, 2)
+  balance            Decimal       @db.Decimal(14, 2)
+  interestPaidToDate Decimal       @default(0) @db.Decimal(14, 2)
+  interestRate       Decimal?      @db.Decimal(7, 4)
+  minimumPayment     Decimal?      @db.Decimal(14, 2)
+  /// Day of month (1-31) the payment is due each month, mirrors Account.paymentDueDay, not a
+  /// specific calendar date.
+  paymentDueDay      Int?
+  loanStartDate      DateTime?     @db.Date
+  order              Int           @default(0)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  balanceChanges     LiabilityBalanceChange[]
+  /// Real Account ledger transactions linked via Transaction.linkedLiabilityId, not used by
+  /// the Record a Payment flow (that's LiabilityPayment below, deliberately ledger-free).
+  linkedTransactions Transaction[]
+  payments           LiabilityPayment[]
+  escrowEntries      EscrowEntry[]
+
+  @@index([budgetId])
+}
+
+/// Mirrors AssetValueChange, keeps Net Worth Over Time accurate.
+model LiabilityBalanceChange {
+  id          String    @id @default(uuid()) @db.Uuid
+  liabilityId String    @db.Uuid
+  liability   Liability @relation(fields: [liabilityId], references: [id], onDelete: Cascade)
+  date        DateTime  @db.Date
+  balance     Decimal   @db.Decimal(14, 2)
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([liabilityId, date])
+}
+
+/// A logged real-world payment against a Liability. Deliberately NOT a Transaction, never
+/// touches an Account's ledger/balance. `accountId` is informational ("paid from") only.
+/// `principal`/`interest` are always populated (auto-split from `paymentAmount` when the user
+/// enters just a total, or user-entered directly) so the amortization schedule always has a
+/// breakdown to render and trend on.
+model LiabilityPayment {
+  id            String    @id @default(uuid()) @db.Uuid
+  liabilityId   String    @db.Uuid
+  liability     Liability @relation(fields: [liabilityId], references: [id], onDelete: Cascade)
+  date          DateTime  @db.Date
+  paymentAmount Decimal   @db.Decimal(14, 2)
+  principal     Decimal   @db.Decimal(14, 2)
+  interest      Decimal   @db.Decimal(14, 2)
+  escrowAmount  Decimal?  @db.Decimal(14, 2)
+  endingBalance Decimal   @db.Decimal(14, 2)
+  accountId     String?   @db.Uuid
+  account       Account?  @relation(fields: [accountId], references: [id])
+  notes         String?
+  createdAt     DateTime  @default(now())
+
+  escrowEntries EscrowEntry[]
+
+  @@index([liabilityId, date])
+}
+
+enum EscrowEntryType {
+  deposit
+  disbursement
+}
+
+/// Running escrow ledger for mortgage-type liabilities. Deposits are usually auto-created from
+/// a LiabilityPayment's escrowAmount (liabilityPaymentId set); disbursements (property tax,
+/// insurance payouts) are entered directly against the liability.
+model EscrowEntry {
+  id                 String            @id @default(uuid()) @db.Uuid
+  liabilityId        String            @db.Uuid
+  liability          Liability         @relation(fields: [liabilityId], references: [id], onDelete: Cascade)
+  date               DateTime          @db.Date
+  type               EscrowEntryType
+  amount             Decimal           @db.Decimal(14, 2)
+  runningBalance     Decimal           @db.Decimal(14, 2)
+  description        String?
+  liabilityPaymentId String?           @db.Uuid
+  liabilityPayment   LiabilityPayment? @relation(fields: [liabilityPaymentId], references: [id])
+  createdAt          DateTime          @default(now())
+
+  @@index([liabilityId, date])
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Income Calculator & Paychecks (per-job, per-user)
+// ─────────────────────────────────────────────────────────────────────────
+
+enum PayPeriodType {
+  weekly
+  bi_weekly
+  semi_monthly
+  monthly
+}
+
+model Job {
+  id            String        @id @default(uuid()) @db.Uuid
+  userId        String        @db.Uuid
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name          String
+  isActive      Boolean       @default(true)
+  payPeriodType PayPeriodType
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  paycheckTemplate PaycheckTemplate?
+  paychecks        Paycheck[]
+
+  @@index([userId])
+}
+
+/// Exactly one per Job, a living config edited in place, not versioned.
+model PaycheckTemplate {
+  id                        String   @id @default(uuid()) @db.Uuid
+  jobId                     String   @unique @db.Uuid
+  job                       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  grossIncome               Decimal  @db.Decimal(14, 2)
+  /// IncomeItem[]: { id, name, amount }
+  incomeItems               Json
+  /// WithholdingItem[]: { id, name, amount, isPreTax, calculationType }
+  withholdingItems          Json
+  /// EmployerContributionItem[]: { id, name, amount, calculationType }
+  employerContributionItems Json
+  federalTaxAmount          Decimal  @default(0) @db.Decimal(14, 2)
+  oasdiAmount               Decimal  @default(0) @db.Decimal(14, 2)
+  medicareAmount            Decimal  @default(0) @db.Decimal(14, 2)
+  stateTaxAmount            Decimal  @default(0) @db.Decimal(14, 2)
+  oasdiCalculationRule      String?
+  medicareCalculationRule   String?
+  stateTaxCalculationRule   String?
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+}
+
+model Paycheck {
+  id                        String   @id @default(uuid()) @db.Uuid
+  jobId                     String   @db.Uuid
+  job                       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  periodStartDate           DateTime @db.Date
+  periodEndDate             DateTime @db.Date
+  grossIncome               Decimal  @db.Decimal(14, 2)
+  incomeItems               Json
+  withholdingItems          Json
+  /// Mirrors PaycheckTemplate.employerContributionItems. An item's `isEditableOnPaycheck` flag
+  /// (set on the template) governs whether it was editable when this paycheck was logged; a
+  /// non-editable one is always the template's value as of that date, copied in verbatim.
+  employerContributionItems Json     @default("[]")
+  federalTaxAmount          Decimal  @default(0) @db.Decimal(14, 2)
+  oasdiAmount               Decimal  @default(0) @db.Decimal(14, 2)
+  medicareAmount            Decimal  @default(0) @db.Decimal(14, 2)
+  stateTaxAmount            Decimal  @default(0) @db.Decimal(14, 2)
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  @@index([jobId, periodStartDate])
+}
+
+/// One per user, regardless of how many jobs they hold. Tax filing status is a property
+/// of the person, not the job.
+model UserTaxSettings {
+  id                              String   @id @default(uuid()) @db.Uuid
+  userId                          String   @unique @db.Uuid
+  user                            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fillingType                     String?
+  stateTaxRate                    Decimal? @db.Decimal(7, 4)
+  socialSecurityRate              Decimal? @db.Decimal(7, 4)
+  medicareRate                    Decimal? @db.Decimal(7, 4)
+  fourZeroOneKContributionRate    Decimal? @db.Decimal(7, 4)
+  fourZeroOneKMatchRate           Decimal? @db.Decimal(7, 4)
+  fourZeroOneKMaxContributionRate Decimal? @db.Decimal(14, 2)
+  standardDeduction               Decimal? @db.Decimal(14, 2)
+  childDependencyCredit           Decimal? @db.Decimal(14, 2)
+  otherDependencyCredit           Decimal? @db.Decimal(14, 2)
+  eligibleChildDependents         Int?
+  eligibleOtherDependents         Int?
+  studentLoanCapAmount            Decimal? @db.Decimal(14, 2)
+  /// Not part of the original field list, added alongside RetirementAccount for the
+  /// mockup's Withholding Tracker / Retirement Goal tabs (a deliberate scope addition).
+  ytdWithheldAmount               Decimal? @db.Decimal(14, 2)
+  estimatedTaxLiability           Decimal? @db.Decimal(14, 2)
+  retirementGoalAmount            Decimal? @db.Decimal(14, 2)
+  retirementGoalAge               Int?
+  createdAt                       DateTime @default(now())
+  updatedAt                       DateTime @updatedAt
+}
+
+enum RetirementAccountType {
+  four01k  @map("401k")
+  ira
+  roth_ira
+  pension
+}
+
+/// New entity, the mockup's Retirement Accounts tab tracks balances/contribution rates
+/// separately from Net Worth's Assets, which has no retirement-specific type and isn't
+/// scoped to a user (it's budget-scoped). Personal, userId-only, matching Tax & Retirement's
+/// user-scoped access model.
+model RetirementAccount {
+  id              String                @id @default(uuid()) @db.Uuid
+  userId          String                @db.Uuid
+  user            User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name            String
+  type            RetirementAccountType
+  balance         Decimal               @db.Decimal(14, 2)
+  contributionPct Decimal?              @db.Decimal(5, 2)
+  order           Int                   @default(0)
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@index([userId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Personal Preferences, Notifications & API Tokens
+// ─────────────────────────────────────────────────────────────────────────
+
+model FavoriteCategory {
+  id         String   @id @default(uuid()) @db.Uuid
+  userId     String   @db.Uuid
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId String   @db.Uuid
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, categoryId])
+}
+
+/// A persisted, historical notification instance, not an ephemeral computed candidate.
+/// notificationKey identifies a specific condition instance (e.g. "over_budget" at a given
+/// count, or a specific account's reconciliation-due state) scoped to (budgetId, type) so it's
+/// unique per instance but stable across repeated detection passes, so re-detecting the same
+/// instance is a no-op, and it only reappears (unarchived) if archived and later re-detected.
+model Notification {
+  id              String           @id @default(uuid()) @db.Uuid
+  userId          String           @db.Uuid
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  budgetId        String           @db.Uuid
+  budget          Budget           @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  type            NotificationType
+  notificationKey String
+  title           String
+  body            String?
+  createdAt       DateTime         @default(now())
+  readAt          DateTime?
+  archivedAt      DateTime?
+  pushedAt        DateTime?
+
+  @@unique([userId, notificationKey])
+  @@index([userId, archivedAt, readAt])
+}
+
+model PushSubscription {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @db.Uuid
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint    String   @unique
+  keysP256dh  String
+  keysAuth    String
+  deviceLabel String?
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+}
+
+enum NotificationType {
+  uncategorized_transactions
+  needs_review
+  over_budget
+  reconciliation_due
+  card_expiring
+}
+
+model NotificationPreference {
+  id               String           @id @default(uuid()) @db.Uuid
+  userId           String           @db.Uuid
+  user             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notificationType NotificationType
+  inAppEnabled     Boolean          @default(true)
+  pushEnabled      Boolean          @default(false)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  @@unique([userId, notificationType])
+}
+
+/// User Preferences' default page size per paginated page, keyed by an app-defined
+/// `pageKey` (src/lib/pagePreferences.ts) rather than an enum, so a new paginated page never
+/// needs a migration to become configurable.
+model UserPagePreference {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @db.Uuid
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pageKey     String
+  rowsPerPage Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, pageKey])
+}
+
+/// User Preferences' per-page sidebar show/hide-on-navigate behavior, keyed by an
+/// app-defined `pageKey` (src/lib/sidebarVisibilityKeys.ts), mirroring UserPagePreference's
+/// shape. Distinct from sidebarAccountsOpen/sidebarNetWorthOpen on User, which control whether
+/// the Accounts/Net Worth *groups* start expanded once the sidebar is already showing. This
+/// controls whether the sidebar itself shows at all for a given destination.
+model UserSidebarVisibilityPreference {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pageKey   String
+  visible   Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, pageKey])
+}
+
+/// Unconditionally read-only, capped at min(read_only, owner's actual FeaturePermission).
+model ApiToken {
+  id           String    @id @default(uuid()) @db.Uuid
+  userId       String    @db.Uuid
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  budgetId     String    @db.Uuid
+  budget       Budget    @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  label        String
+  tokenHash    String    @unique
+  /// Last few characters of the raw token, stored in plaintext so the list can show
+  /// "cb_...aB3d", not part of the original field list, added purely so a user
+  /// can tell similarly-named tokens apart without ever re-displaying the full secret.
+  tokenPreview String
+  lastUsedAt   DateTime?
+  createdAt    DateTime  @default(now())
+  revokedAt    DateTime?
+
+  @@index([userId])
+  @@index([budgetId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Audit Log
+// ─────────────────────────────────────────────────────────────────────────
+
+enum AuditAction {
+  create
+  update
+  delete
+}
+
+/// Immutable, never deleted by access revocation. Retention: 2 years.
+/// budgetId is nullable for personal, budget-independent actions (Job/PaycheckTemplate/Paycheck
+/// under the Income Calculator, deliberately not budget-scoped). Every other entity
+/// this app logs is budget-scoped and still sets it.
+model AuditLogEntry {
+  id         String      @id @default(uuid()) @db.Uuid
+  budgetId   String?     @db.Uuid
+  budget     Budget?     @relation(fields: [budgetId], references: [id])
+  userId     String      @db.Uuid
+  user       User        @relation(fields: [userId], references: [id])
+  action     AuditAction
+  entityType String
+  entityId   String      @db.Uuid
+  summary    String
+  createdAt  DateTime    @default(now())
+
+  @@index([budgetId, createdAt])
+  @@index([entityType, entityId])
+}

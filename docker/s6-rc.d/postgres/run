@@ -1,0 +1,30 @@
+#!/bin/sh
+# Embedded PostgreSQL. Skipped entirely when the operator supplies their own DATABASE_URL (the
+# "external Postgres" alternate mode). Every other service in this tree derives its own
+# effective DATABASE_URL the same way, so this single check is the one source of truth for
+# embedded-vs-external mode.
+set -e
+
+if [ -n "$DATABASE_URL" ]; then
+  exec sleep infinity
+fi
+
+PGBIN=/usr/lib/postgresql/18/bin
+export PATH="$PGBIN:$PATH"
+
+if [ ! -s "$PGDATA/PG_VERSION" ]; then
+  mkdir -p "$PGDATA"
+  chown postgres:postgres "$PGDATA"
+  chmod 700 "$PGDATA"
+  # Never reachable outside this container (listen_addresses below, no published port), so trust
+  # auth on the loopback/socket keeps the embedded flow free of a password to generate or lose.
+  gosu postgres initdb -D "$PGDATA" --auth-local=trust --auth-host=trust
+  {
+    echo "listen_addresses = 'localhost'"
+  } >>"$PGDATA/postgresql.conf"
+  {
+    echo "host all all 127.0.0.1/32 trust"
+  } >>"$PGDATA/pg_hba.conf"
+fi
+
+exec gosu postgres postgres -D "$PGDATA"

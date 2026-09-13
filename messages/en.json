@@ -1,0 +1,2243 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "close": "Close",
+    "confirm": "Confirm",
+    "edit": "Edit",
+    "add": "Add",
+    "back": "Back",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "skipToContent": "Skip to main content",
+    "yes": "Yes",
+    "no": "No",
+    "appDescription": "Self-hosted, multi-user budgeting and net worth tracking.",
+    "themeToggle": {
+      "ariaLabel": "Toggle light/dark mode",
+      "switchToLight": "Switch to light mode",
+      "switchToDark": "Switch to dark mode"
+    },
+    "errorPage": {
+      "title": "Something went wrong",
+      "subtitle": "CoreBudget hit an unexpected error. You can try again, or head back to the Dashboard.",
+      "tryAgain": "Try Again",
+      "goToDashboard": "Go to Dashboard"
+    },
+    "errors": {
+      "notAllowed": "Not allowed.",
+      "notFound": "Not found.",
+      "unexpected": "Something went wrong."
+    }
+  },
+  "auth": {
+    "shared": {
+      "invalidToken": {
+        "title": "Link No Longer Valid"
+      },
+      "passwordLabel": "Password",
+      "confirmPasswordLabel": "Confirm Password",
+      "passwordPlaceholderMin8": "At least 8 characters",
+      "confirmPasswordPlaceholder": "Re-enter password",
+      "sixDigitCodeLabel": "6-digit code",
+      "codePlaceholder": "123456",
+      "totpQrAlt": "TOTP QR code",
+      "manualKeyEntry": "Can't scan? Enter this key manually: {secret}",
+      "rememberDevice": "Remember this device for 30 days",
+      "errors": {
+        "enterCode": "Enter the 6-digit code from your authenticator app.",
+        "incorrectCode": "Incorrect code.",
+        "passwordMinLength": "Password must be at least 8 characters.",
+        "passwordMismatch": "Passwords don't match."
+      }
+    },
+    "login": {
+      "metaTitle": "Sign in | CoreBudget",
+      "title": "Sign In",
+      "subtitle": "Welcome back to CoreBudget.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordPlaceholder": "Password",
+      "submitButton": "Sign In",
+      "totpTitle": "Two-Factor Verification",
+      "totpSubtitle": "Enter the 6-digit code from your authenticator app to finish signing in.",
+      "verificationCodeLabel": "Verification Code",
+      "verifyButton": "Verify & Sign In",
+      "enrollTitle": "Set Up Two-Factor Again",
+      "enrollSubtitle": "An administrator reset your 2FA. Scan this with an authenticator app to reconnect it.",
+      "confirmButton": "Confirm & Sign In",
+      "errors": {
+        "invalidCredentialsInput": "Enter a valid email and password.",
+        "incorrectCredentials": "Incorrect email or password.",
+        "sessionExpired": "Session expired. Sign in again.",
+        "signInAgain": "Sign in again."
+      }
+    },
+    "invite": {
+      "metaTitle": "Complete your account | CoreBudget",
+      "welcomeTitle": "Welcome, {name}",
+      "subtitle": "Set a password and connect an authenticator app to finish setting up your account.",
+      "scanInstructions": "Scan this with an authenticator app (Google Authenticator, Authy, etc.):",
+      "submitButton": "Complete Setup",
+      "invalidTokenMessage": "This invite link is invalid or has expired. Ask your administrator to send a new one.",
+      "errors": {
+        "invalidToken": "This invite link is invalid or has expired."
+      }
+    },
+    "resetPassword": {
+      "metaTitle": "Reset password | CoreBudget",
+      "title": "Set a New Password",
+      "subtitle": "Choose a new password for your account.",
+      "newPasswordLabel": "New Password",
+      "confirmNewPasswordLabel": "Confirm New Password",
+      "submitButton": "Reset Password",
+      "invalidTokenMessage": "This link has already been used or has expired. Ask your administrator for a new one.",
+      "errors": {
+        "invalidToken": "This link has already been used or expired."
+      }
+    }
+  },
+  "setup": {
+    "metaTitle": "Set up CoreBudget",
+    "shared": {
+      "continueButton": "Continue",
+      "errors": {
+        "notSignedIn": "Not signed in."
+      }
+    },
+    "steps": {
+      "adminAccount": "Admin Account",
+      "household": "Household",
+      "firstBudget": "First Budget",
+      "firstAccount": "First Account",
+      "inviteOptional": "Invite (Optional)"
+    },
+    "adminAccount": {
+      "title": "Welcome to CoreBudget",
+      "subtitle": "Let's set up your system administrator account. This account manages users, households, and system settings.",
+      "nameLabel": "Full Name",
+      "namePlaceholder": "Chris Pezza",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "At least 8 characters",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "Re-enter password",
+      "totpInstructions": "2FA is required for every account. Scan this with an authenticator app:",
+      "qrAlt": "TOTP QR code",
+      "manualKeyEntry": "Can't scan? Enter this key manually: {secret}",
+      "codeLabel": "6-digit code",
+      "codePlaceholder": "123456",
+      "errors": {
+        "nameRequired": "Enter your name.",
+        "passwordMinLength": "Password must be at least 8 characters.",
+        "passwordMismatch": "Passwords don't match.",
+        "codeFormat": "Enter the 6-digit code from your authenticator app.",
+        "alreadyCompleted": "Setup has already been completed.",
+        "incorrectCode": "Incorrect code."
+      }
+    },
+    "household": {
+      "title": "Name Your Household",
+      "subtitle": "A household groups the people, budgets, and accounts you manage together.",
+      "nameLabel": "Household Name",
+      "namePlaceholder": "Pezza Family",
+      "errors": {
+        "nameRequired": "Enter a household name."
+      }
+    },
+    "budget": {
+      "title": "Create Your First Budget",
+      "subtitle": "You can add more budgets later, for separate purposes like a business or a shared expense pool.",
+      "nameLabel": "Budget Name",
+      "namePlaceholder": "Household Budget",
+      "errors": {
+        "nameRequired": "Enter a budget name.",
+        "noHousehold": "Create a household first."
+      }
+    },
+    "account": {
+      "title": "Add Your First Account",
+      "subtitle": "Add a checking account, credit card, or cash account to start tracking transactions. You can add more from Accounts later.",
+      "nameLabel": "Account Name",
+      "namePlaceholder": "Checking",
+      "typeLabel": "Account Type",
+      "balanceLabel": "Current Balance",
+      "balancePlaceholder": "0.00",
+      "errors": {
+        "nameRequired": "Enter an account name.",
+        "noBudget": "Create a budget first."
+      }
+    },
+    "invite": {
+      "title": "Invite Household Members",
+      "subtitle": "Optional: invite others to view or manage this household's budgets. You can always do this later from Households & Access.",
+      "invitedList": "Invited: {list}",
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "name@example.com",
+      "addButton": "Add Invite",
+      "errors": {
+        "nameRequired": "Enter a name.",
+        "noHousehold": "Create a household first.",
+        "smtpNotConfigured": "SMTP isn't configured yet. Share this link instead: {acceptUrl}"
+      }
+    }
+  },
+  "admin": {
+    "shell": {
+      "metaTitle": "Admin | CoreBudget",
+      "brandName": "CoreBudget",
+      "adminBadge": "ADMIN",
+      "backToBudget": "Back to Budget",
+      "nav": {
+        "users": "Users",
+        "households": "Households & Access",
+        "payees": "Payees",
+        "settings": "Settings",
+        "features": "Features",
+        "health": "System Health",
+        "backups": "Backups",
+        "docs": "Docs"
+      }
+    },
+    "common": {
+      "pagination": {
+        "range": "{rangeStart}–{rangeEnd} of {total}",
+        "previous": "Previous",
+        "next": "Next",
+        "pageOf": "Page {page} of {pageCount}"
+      }
+    },
+    "backups": {
+      "metaTitle": "Backups | Admin | CoreBudget",
+      "title": "Backups",
+      "subtitle": "Trigger and manage data backups for this instance. Backups are encrypted at rest.",
+      "runNow": "Run Backup Now",
+      "autoBackup": {
+        "title": "Automatic Daily Backups",
+        "description": "Runs every night at 3:00 AM. Backups are encrypted at rest with the instance's encryption key.",
+        "toggleAriaLabel": "Toggle automatic daily backups"
+      },
+      "columns": {
+        "date": "Date",
+        "type": "Type",
+        "size": "Size",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "empty": "No backups yet.",
+      "type": {
+        "automatic": "Automatic",
+        "manual": "Manual"
+      },
+      "status": {
+        "completed": "Completed",
+        "running": "Running",
+        "failed": "Failed"
+      },
+      "download": "Download",
+      "retry": "Retry",
+      "deleteAriaLabel": "Delete this failed backup",
+      "deleteConfirm": {
+        "title": "Delete Backup",
+        "description": "Delete this failed backup record? This can't be undone."
+      },
+      "clearFailed": "Clear {count} Failed",
+      "inProgress": "In progress…",
+      "errors": {
+        "notFound": "Backup not found",
+        "fileMissing": "Backup file is missing on disk"
+      }
+    },
+    "docs": {
+      "metaTitle": "Docs | Admin | CoreBudget",
+      "title": "Docs",
+      "subtitle": "Reference material for admins: how the platform's access model and background processes actually work.",
+      "guidesHeading": "Guides",
+      "guides": {
+        "gettingStarted": {
+          "title": "Getting Started",
+          "description": "Every user is added by invite only, sent from Users. Households and budgets are created and access is granted from Users and Households & Access. A household member gets no budget visibility until an admin explicitly grants it, and a granted budget starts with no feature access until permissions are set."
+        },
+        "managingUsersHouseholds": {
+          "title": "Managing Users & Households",
+          "description": "Deactivating a user blocks sign-in without deleting their history. Removing household access cascades: it revokes that user's access to every budget in the household along with its feature permissions. Revoking just one budget's access removes only that budget's permissions, leaving household membership and other budgets untouched."
+        },
+        "payeeRenamingRules": {
+          "title": "Payee Renaming Rules",
+          "description": "Payees are shared platform-wide, not per-household. A renaming rule matches an incoming or imported payee string against a pattern using one of four match types (Contains, Starts with, Ends with, Equals), then displays it under the canonical payee name. Merging two payees moves all transaction history, renaming rules, and per-budget auto-category mappings onto the surviving payee."
+        },
+        "backupsRestore": {
+          "title": "Backups & Restore",
+          "description": "Backups are pg_dump snapshots encrypted at rest with this instance's encryption key (APP_ENCRYPTION_KEY). A completed backup can be downloaded from Backups. To move one to another instance (e.g. test to production): copy APP_ENCRYPTION_KEY to the target instance's .env first, since a few settings columns (SMTP password, VAPID key) are encrypted with it and won't decrypt under a different key. Then, from the app's checkout, run npm run backup:decrypt -- <downloaded-file> decrypted.sql, and load the result into a FRESH, EMPTY target database (the dump has no --clean, so it fails against a database that's already been through First-Time Setup): psql \"$DATABASE_URL\" -f decrypted.sql. Losing the encryption key makes existing backups unrecoverable, so keep it somewhere safe outside this instance."
+        }
+      },
+      "apiTokensHeading": "Read-Only API Tokens",
+      "apiTokensDescription": "Each user can generate their own read-only API tokens from their personal settings, for home-lab integrations (dashboards, monitoring). Every token is permanently scoped to exactly one budget, chosen at creation time, so a user with multiple budgets needs a separate token per budget. Tokens are unconditionally GET-only against a versioned <code>/api/v1/…</code> surface, rate-limited to 60 requests/minute, and capped at read-only even if the owning user has edit access. No write or webhook endpoints exist for tokens, by design. Send the token as <code>Authorization: Bearer &lt;token&gt;</code>.",
+      "apiEndpoints": {
+        "columns": {
+          "method": "Method",
+          "path": "Path",
+          "feature": "Requires",
+          "description": "Returns"
+        },
+        "netWorth": {
+          "feature": "Assets + Liabilities",
+          "description": "Net worth summary: total cash, credit, assets, loans, and net worth."
+        },
+        "accounts": {
+          "feature": "Accounts/Transactions",
+          "description": "Every open account's id, name, type, and current balance."
+        },
+        "budgetStatus": {
+          "feature": "Budget",
+          "description": "Current month's assigned/activity/available totals and how many categories are over budget."
+        },
+        "categories": {
+          "feature": "Budget",
+          "description": "Current month's assigned/activity/available for every budget category."
+        }
+      },
+      "apiEndpointDetail": {
+        "metaTitleSuffix": "API Reference | Admin | CoreBudget",
+        "backLink": "Back to Docs",
+        "requiredFeatureLabel": "Required Feature Access",
+        "authenticationHeading": "Authentication",
+        "authenticationBody": "Send the token as an Authorization header: {header}. A token is capped at read-only and can never see more than its owner can see in the app itself.",
+        "requestHeading": "Example Request",
+        "responseHeading": "Example Response (200 OK)",
+        "errorsHeading": "Error Responses",
+        "errorsSubtitle": "The same error shapes apply to every /api/v1/... endpoint, not just this one."
+      }
+    },
+    "health": {
+      "metaTitle": "System Health | Admin | CoreBudget",
+      "title": "System Health",
+      "subtitle": "Live server and application status.",
+      "cards": {
+        "appStatus": "App Status",
+        "database": "Database",
+        "storage": "Storage Used",
+        "uptime": "Uptime",
+        "activeSessions": "Active Sessions"
+      },
+      "appStatusHealthy": "Healthy",
+      "databaseConnected": "Connected · {ms}ms",
+      "uptimeHours": "{hours, plural, one {# hour} other {# hours}}",
+      "uptimeDaysHours": "{days, plural, one {# day} other {# days}}, {hours, plural, one {# hour} other {# hours}}",
+      "jobs": {
+        "automaticBackup": "Automatic Backup",
+        "sessionCleanup": "Session Cleanup",
+        "auditLogRetention": "Audit Log Retention",
+        "processDueRepeatingTransactions": "Process Due Repeating Transactions",
+        "categoryPlanSnapshot": "Category Plan Snapshot",
+        "sendPushNotifications": "Send Push Notifications",
+        "errorLogRetention": "Error Log Retention"
+      },
+      "status": {
+        "completed": "completed",
+        "failed": "failed",
+        "running": "running"
+      },
+      "scheduledJobs": {
+        "title": "Scheduled Jobs",
+        "columns": {
+          "job": "Job",
+          "cadence": "Cadence",
+          "lastRun": "Last Run",
+          "result": "Result"
+        },
+        "neverRun": "Never run yet",
+        "cadence": {
+          "dailyAt3am": "Daily at 3:00 AM",
+          "hourly": "Hourly",
+          "dailyAt4am": "Daily at 4:00 AM",
+          "dailyAt6am": "Daily at 6:00 AM",
+          "monthlyFirst": "Monthly on the 1st at 12:00 AM",
+          "every15Minutes": "Every 15 minutes",
+          "dailyAt430am": "Daily at 4:30 AM"
+        },
+        "inactiveReasons": {
+          "feature_disabled": "Inactive: feature disabled",
+          "backups_disabled": "Inactive: backups disabled"
+        }
+      },
+      "jobHistory": {
+        "title": "Job History",
+        "columns": {
+          "job": "Job",
+          "started": "Started",
+          "duration": "Duration",
+          "status": "Status",
+          "detail": "Detail"
+        },
+        "empty": "No scheduled jobs have run yet.",
+        "failed": "Failed"
+      },
+      "errorLog": {
+        "title": "Error Log",
+        "subtitle": "Unexpected failures the app itself caught: a React error boundary, or an uncaught exception/rejection in the server process.",
+        "columns": {
+          "time": "Time",
+          "source": "Source",
+          "message": "Message"
+        },
+        "sources": {
+          "react_error_boundary": "Page Error",
+          "uncaught_exception": "Server Exception",
+          "unhandled_rejection": "Unhandled Rejection"
+        },
+        "showStack": "Show stack trace",
+        "hideStack": "Hide stack trace",
+        "empty": "No errors recorded."
+      }
+    },
+    "households": {
+      "metaTitle": "Households & Access | Admin | CoreBudget",
+      "title": "Households & Access",
+      "subtitle": "Create households and grant access, the only way a user sees a household or budget. No drill-in to actual budget data.",
+      "unknownUser": "Unknown",
+      "columns": {
+        "household": "Household",
+        "members": "Members",
+        "budgets": "Budgets",
+        "lastUpdated": "Last Updated"
+      },
+      "createHousehold": "Create Household",
+      "createHouseholdDialog": {
+        "title": "Create Household",
+        "nameLabel": "Household Name",
+        "ownerLabel": "Owner",
+        "selectUser": "Select user…",
+        "submit": "Create Household"
+      },
+      "errors": {
+        "nameRequired": "Enter a household name.",
+        "ownerRequired": "Select an owner.",
+        "userRequired": "Select a user."
+      },
+      "membersHeading": "{name}: Members",
+      "noMembers": "No members yet.",
+      "roles": {
+        "owner": "Owner",
+        "member": "Member"
+      },
+      "makeMember": "Make Member",
+      "makeOwner": "Make Owner",
+      "remove": "Remove",
+      "removeConfirm": {
+        "title": "Remove Member",
+        "description": "Remove \"{name}\" from this household? They'll lose access to every budget in it."
+      },
+      "budgetsHeading": "Budgets & Feature Permissions",
+      "noBudgets": "No budgets in this household yet.",
+      "noBudgetAccess": "No one has budget access yet.",
+      "revoke": "Revoke",
+      "grantAccess": "Grant Access",
+      "grantAccessDialog": {
+        "title": "Grant Household Access",
+        "userLabel": "User",
+        "roleLabel": "Role",
+        "submit": "Grant Access"
+      },
+      "householdMemberPlaceholder": "Household member…",
+      "grantBudgetAccess": "Grant Budget Access",
+      "managePermissions": "Manage Permissions",
+      "savePermissions": "Save Permissions",
+      "features": {
+        "transactions": "Transactions",
+        "budgetEnvelope": "Budget (Envelope)",
+        "plan": "Plan",
+        "netWorthAssets": "Net Worth (Assets)",
+        "netWorthLiabilities": "Net Worth (Liabilities)",
+        "reports": "Reports",
+        "repeatingTransactions": "Repeating Transactions",
+        "subscriptions": "Subscriptions",
+        "budgetSettings": "Settings",
+        "auditLog": "Audit Log"
+      },
+      "permissionLevels": {
+        "noAccess": "No Access",
+        "readOnly": "Read-only",
+        "edit": "Edit"
+      },
+      "permissionSummary": "{edit} Edit · {readOnly} Read-only · {noAccess} No access"
+    },
+    "payees": {
+      "metaTitle": "Payees | Admin | CoreBudget",
+      "detailMetaTitle": "Payee Detail | Admin | CoreBudget",
+      "title": "Payees",
+      "subtitle": "Platform-wide payee list, shared by every household and budget. Regular users create payees on the fly while entering transactions. Manage, merge, and set renaming rules here.",
+      "searchPlaceholder": "Search payees…",
+      "columns": {
+        "name": "Name",
+        "txns": "Transactions",
+        "lastUsed": "Last Used",
+        "renamingRules": "Renaming Rules",
+        "actions": "Actions"
+      },
+      "noSearchResults": "No payees match that search.",
+      "never": "Never",
+      "filters": {
+        "button": "Filter",
+        "startingLetterLabel": "Starts With",
+        "allLetters": "All",
+        "minTxnCountLabel": "More than N transactions",
+        "lastUsedSinceLabel": "Last used since",
+        "minRuleCountLabel": "More than N rules",
+        "clearAll": "Clear all filters"
+      },
+      "ruleCount": "{count, plural, one {# rule} other {# rules}}",
+      "noRules": "None",
+      "merge": "Merge",
+      "mergeInto": "Merge into \"{name}\":",
+      "selectPayeePlaceholder": "Select payee to merge in…",
+      "confirmMerge": "Confirm Merge",
+      "deleteConfirm": {
+        "title": "Delete Payee",
+        "description": "Delete \"{name}\"? This can't be undone. Payees with transaction history can't be deleted."
+      },
+      "createPayee": "Create Payee",
+      "createPayeeDialog": {
+        "title": "Create Payee",
+        "nameLabel": "Name",
+        "showInPickerLists": "Show in payee picker lists",
+        "enableAutoCategory": "Enable auto-categorization for this payee",
+        "submit": "Create Payee"
+      },
+      "errors": {
+        "nameRequired": "Enter a payee name.",
+        "nameExists": "A payee named \"{name}\" already exists.",
+        "hasHistory": "This payee has transaction history and can't be deleted.",
+        "mergeSameTarget": "Choose a different payee to merge in.",
+        "payeeNotFound": "Payee not found.",
+        "patternRequired": "Enter a pattern."
+      },
+      "messages": {
+        "created": "Payee created."
+      },
+      "matchTypes": {
+        "contains": "Contains",
+        "startsWith": "Starts with",
+        "endsWith": "Ends with",
+        "equals": "Equals"
+      },
+      "detail": {
+        "transactionCount": "{count, plural, one {# transaction} other {# transactions}}",
+        "addRule": "Add Rule",
+        "columns": {
+          "match": "Match",
+          "pattern": "Pattern (renames to \"{name}\")"
+        },
+        "matchTypeLabel": "Match type",
+        "patternPlaceholder": "Pattern, e.g. AMAZON.COM",
+        "noRules": "No renaming rules yet.",
+        "editPayee": "Edit Payee",
+        "showInPicker": "Show in payee picker",
+        "deleteRuleConfirm": {
+          "title": "Delete Renaming Rule",
+          "description": "Delete this renaming rule? This can't be undone."
+        }
+      }
+    },
+    "settings": {
+      "metaTitle": "Settings | Admin | CoreBudget",
+      "title": "Settings",
+      "subtitle": "Instance-wide defaults. Currency and session timeout apply to every household and budget, not per-user or per-budget settings.",
+      "localization": {
+        "title": "Localization & Sessions",
+        "subtitle": "Instance-wide defaults for language, currency, and idle timeout.",
+        "defaultLanguageLabel": "Instance Default Language",
+        "currencyLabel": "Platform Currency",
+        "sessionTimeoutLabel": "Session Timeout"
+      },
+      "languages": {
+        "english": "English",
+        "spanish": "Spanish",
+        "french": "French",
+        "german": "German",
+        "portuguese": "Portuguese"
+      },
+      "sessionTimeouts": {
+        "minutes15": "15 minutes",
+        "minutes30": "30 minutes",
+        "hours1": "1 hour",
+        "hours4": "4 hours",
+        "hours8": "8 hours",
+        "hours24": "24 hours",
+        "days7": "7 days",
+        "days30": "30 days"
+      },
+      "smtp": {
+        "title": "Email (SMTP)",
+        "subtitle": "Used only for invite links and password resets. No other feature sends email through this relay.",
+        "hostLabel": "SMTP Host",
+        "portLabel": "SMTP Port",
+        "usernameLabel": "SMTP Username",
+        "passwordLabel": "SMTP Password",
+        "passwordLabelConfigured": "SMTP Password (configured, leave blank to keep)",
+        "fromAddressLabel": "From Address",
+        "submit": "Save SMTP Settings"
+      },
+      "webPush": {
+        "title": "Web Push",
+        "subtitle": "VAPID keys used to send real push notifications to subscribed devices. Regenerating disconnects every currently-subscribed device.",
+        "publicKeyLabel": "Public Key",
+        "notConfigured": "Not configured",
+        "generate": "Generate Keys",
+        "regenerate": "Generate New Keys",
+        "regenerated": "New VAPID keys generated. All devices must re-enable push.",
+        "confirmTitle": "Generate new VAPID keys?",
+        "confirmBody": "Every device currently subscribed to push notifications will stop receiving them until each user re-enables push in Settings.",
+        "confirmAction": "Generate New Keys"
+      },
+      "messages": {
+        "saved": "Saved."
+      }
+    },
+    "features": {
+      "metaTitle": "Features | Admin | CoreBudget",
+      "title": "Features",
+      "subtitle": "Turn features on or off for the whole instance. Disabling a feature hides it for every user, regardless of their own budget permissions.",
+      "onLabel": "On",
+      "offLabel": "Off",
+      "descriptions": {
+        "budget": "The envelope budget: assigning money to categories and tracking spending against them month to month.",
+        "plan": "Forward-looking category goals and targets, and the plan-balanced check that compares planned income to planned spending.",
+        "transactions": "Accounts and their transaction ledgers: checking, savings, credit cards, and every entry logged against them.",
+        "netWorthAssets": "Tracked assets (property, vehicles, investments, etc.) and their value history, shown in Net Worth.",
+        "netWorthLiabilities": "Tracked liabilities (loans, mortgages, credit balances) and their payoff/payment history, shown in Net Worth.",
+        "reports": "The Reports area: income & expenses, paychecks, net worth over time, budget vs. actual, and the rest.",
+        "subscriptions": "Recurring subscriptions and membership tracking, separate from ordinary repeating transactions.",
+        "repeatingTransactions": "Scheduled transactions that post automatically on a recurring basis.",
+        "auditLog": "The audit trail of who changed what and when, for budgets and personal data alike.",
+        "incomeCalculator": "The per-job paycheck calculator and paycheck logging tool, independent of any budget."
+      }
+    },
+    "users": {
+      "metaTitle": "Users | Admin | CoreBudget",
+      "detailMetaTitle": "User Detail | Admin | CoreBudget",
+      "title": "User Management",
+      "subtitle": "Create accounts, reset credentials, and deactivate users. This is the only way new users get onto the platform.",
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "status": "Status",
+        "twoFactor": "2FA",
+        "lastLogin": "Last Login",
+        "actions": "Actions"
+      },
+      "adminPill": "Admin",
+      "status": {
+        "active": "Active",
+        "invited": "Invited",
+        "deactivated": "Deactivated"
+      },
+      "twoFactorEnabled": "Enabled",
+      "twoFactorOff": "Off",
+      "neverLoggedIn": "Never",
+      "resetLinkSent": "Reset link sent",
+      "resetPassword": "Reset Password",
+      "twoFactorCleared": "2FA cleared",
+      "resetTwoFactor": "Reset 2FA",
+      "deactivate": "Deactivate",
+      "reactivate": "Reactivate",
+      "smtpNotConfiguredShareLink": "SMTP isn't configured. Share this link instead: {resetUrl}",
+      "createUser": "Create User",
+      "createUserDialog": {
+        "title": "Create User",
+        "nameLabel": "Name",
+        "emailLabel": "Email",
+        "submit": "Create User"
+      },
+      "errors": {
+        "nameRequired": "Enter a name.",
+        "emailInUse": "A user with that email already exists.",
+        "cannotDeactivateSelf": "You can't deactivate your own account."
+      },
+      "messages": {
+        "inviteSent": "Invite sent.",
+        "smtpNotConfiguredShareLink": "SMTP isn't configured. Share this link instead: {acceptUrl}"
+      },
+      "detail": {
+        "activeSessions": "Active Sessions",
+        "columns": {
+          "device": "Device",
+          "location": "Location",
+          "started": "Started",
+          "time": "Time",
+          "result": "Result"
+        },
+        "noActiveSessions": "No active sessions.",
+        "unknownDevice": "Unknown device",
+        "thisSession": "This session",
+        "loginHistory": "Login History",
+        "noLoginHistory": "No login history.",
+        "unknown": "Unknown",
+        "loginSuccess": "Success",
+        "loginFailed": "Failed"
+      }
+    }
+  },
+  "appShell": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "subscriptions": "Subscriptions",
+      "reports": "Reports",
+      "incomeCalculator": "Income Calculator",
+      "plan": "Plan",
+      "budget": "Budget",
+      "budgetSettings": "Settings",
+      "accounts": "Accounts",
+      "more": "More",
+      "accountsGroup": "Accounts",
+      "cash": "Cash",
+      "noCashAccounts": "No cash accounts yet.",
+      "credit": "Credit",
+      "noCreditAccounts": "No credit accounts yet.",
+      "netWorthGroup": "Net Worth",
+      "assets": "Assets",
+      "noAssetsYet": "No assets yet.",
+      "liabilities": "Liabilities",
+      "noLiabilitiesYet": "No liabilities yet.",
+      "collapseSidebar": "Collapse sidebar",
+      "expandSidebar": "Expand sidebar",
+      "noBudgetAccessTitle": "No budget access yet",
+      "noBudgetAccessSubtitle": "You haven't been granted access to a budget yet. Contact your admin to be added to a household and budget."
+    },
+    "avatarMenu": {
+      "userSettings": "User Settings",
+      "taxRetirement": "Tax & Retirement",
+      "jobs": "Jobs",
+      "apiTokens": "API Tokens",
+      "notificationSettings": "Notification Settings",
+      "adminDashboard": "Admin Dashboard",
+      "logOut": "Log out"
+    },
+    "budgetSwitcher": {
+      "noBudgetsYet": "No budgets yet.",
+      "addBudget": "Add Budget",
+      "addBudgetDialog": {
+        "title": "Add Budget",
+        "nameLabel": "Budget Name",
+        "submit": "Create Budget",
+        "errors": {
+          "nameRequired": "Enter a budget name."
+        }
+      }
+    },
+    "notificationBell": {
+      "ariaLabel": "Notifications",
+      "heading": "Notifications",
+      "empty": "No notifications yet."
+    },
+    "quickAddMenu": {
+      "ariaLabel": "Quick add",
+      "addAccount": "Add Account",
+      "addAsset": "Add Asset",
+      "addLiability": "Add Loan/Debt",
+      "addPaycheck": "Add Paycheck",
+      "comingSoon": "{label} is coming soon."
+    },
+    "moreSheet": {
+      "title": "More",
+      "close": "Close"
+    }
+  },
+  "budgetTemplate": {
+    "sections": {
+      "income": "Income",
+      "housing": "Housing",
+      "food": "Food",
+      "transportation": "Transportation",
+      "personal": "Personal",
+      "health": "Health",
+      "savings": "Savings",
+      "giving": "Giving",
+      "miscellaneous": "Miscellaneous"
+    },
+    "categories": {
+      "paycheck": "Paycheck",
+      "otherIncome": "Other Income",
+      "rentMortgage": "Rent/Mortgage",
+      "electricity": "Electricity",
+      "gas": "Gas",
+      "water": "Water",
+      "internet": "Internet",
+      "homeMaintenance": "Home Maintenance",
+      "groceries": "Groceries",
+      "diningOut": "Dining Out",
+      "fuel": "Fuel",
+      "autoInsurance": "Auto Insurance",
+      "autoMaintenance": "Auto Maintenance",
+      "phone": "Phone",
+      "subscriptions": "Subscriptions",
+      "personalCare": "Personal Care",
+      "healthInsurance": "Health Insurance",
+      "medicalDental": "Medical/Dental",
+      "emergencyFund": "Emergency Fund",
+      "giftsDonations": "Gifts & Donations",
+      "miscellaneous": "Miscellaneous"
+    }
+  },
+  "accounts": {
+    "metaTitle": "Account | CoreBudget",
+    "listPage": {
+      "metaTitle": "Accounts | CoreBudget",
+      "title": "Accounts",
+      "addAccount": "Add Account"
+    },
+    "tour": {
+      "addButton": {
+        "title": "Add an account",
+        "description": "Cash accounts (checking, savings) and credit accounts (credit cards) both start here."
+      },
+      "list": {
+        "title": "Your accounts",
+        "description": "Tap an account to open its ledger, add transactions, and see its balance history."
+      }
+    },
+    "addDialog": {
+      "title": "Add Account",
+      "categoryLabel": "Category",
+      "typeLabel": "Account Type",
+      "nameLabel": "Name",
+      "startingBalanceLabel": "Starting Balance",
+      "websiteLabel": "Website",
+      "paymentDueDayLabel": "Payment Due Date",
+      "paymentDueDayHint": "Day of the month when payment is due (1-31)",
+      "cardExpirationLabel": "Card Expiration Date",
+      "successToast": "Account created."
+    },
+    "startingBalanceTransactionLabel": "Starting Balance",
+    "recordPayment": {
+      "title": "Record Payment",
+      "fromAccountLabel": "From Account",
+      "selectAccountPlaceholder": "Select an account…",
+      "dateLabel": "Date",
+      "amountLabel": "Amount",
+      "submit": "Record Payment",
+      "success": "Payment recorded.",
+      "errors": {
+        "fromAccountRequired": "Choose the account this payment is coming from.",
+        "sameAccount": "Choose a different account to pay from.",
+        "invalidFromAccount": "Choose a valid cash account to pay from."
+      }
+    },
+    "category": {
+      "cash": "Cash",
+      "credit": "Credit"
+    },
+    "types": {
+      "checking": "Checking",
+      "savings": "Savings",
+      "cash": "Cash",
+      "investment": "Investment",
+      "credit": "Credit Card",
+      "lineCredit": "Line of Credit"
+    },
+    "errors": {
+      "readOnly": "You have read-only access to Transactions.",
+      "nameRequired": "Enter an account name.",
+      "invalidType": "Choose a valid account type.",
+      "invalidCardExpiration": "Enter the card expiration as MM/YYYY."
+    }
+  },
+  "csvImport": {
+    "stepUpload": "Upload",
+    "stepMap": "Map Columns",
+    "stepPreview": "Preview",
+    "uploadPrompt": "Choose a CSV file to import.",
+    "chooseFileLabel": "Choose CSV file…",
+    "mapPrompt": "Match each field to a column from your file. Fields marked * are required.",
+    "skipOption": "(Skip)",
+    "appliesToAllRows": "Applies to every row",
+    "rawPreviewTitle": "Preview of your file",
+    "previewPrompt": "{count, plural, one {# row} other {# rows}} ready to import. Review before confirming.",
+    "excludedRowsNote": "{count, plural, one {# row was} other {# rows were}} excluded and won't be imported.",
+    "andMoreRows": "…and {count} more",
+    "backButton": "Back",
+    "nextButton": "Next",
+    "importButton": "Import {count, plural, one {# row} other {# rows}}",
+    "importSuccessToast": "Imported {count, plural, one {# row} other {# rows}}.",
+    "errors": {
+      "empty": "That file has no rows to import.",
+      "parseFailed": "Couldn't read that file as CSV.",
+      "tooManyRows": "That file has too many rows. Split it up and try again."
+    }
+  },
+  "netWorth": {
+    "listPage": {
+      "metaTitle": "Net Worth | CoreBudget",
+      "title": "Net Worth",
+      "addAsset": "Add Asset",
+      "addLiability": "Add Loan/Debt"
+    },
+    "tour": {
+      "addButtons": {
+        "title": "Track what you own and owe",
+        "description": "Assets (savings, property, investments) and liabilities (loans, credit balances) are both tracked here to calculate your net worth."
+      },
+      "list": {
+        "title": "Assets & liabilities",
+        "description": "Tap any item to see its full value history and update its balance."
+      }
+    },
+    "addAssetDialog": {
+      "title": "Add Asset",
+      "nameLabel": "Name",
+      "typeLabel": "Type",
+      "valueLabel": "Current Value",
+      "purchaseDateLabel": "Purchase Date",
+      "descriptionLabel": "Description",
+      "successToast": "Asset created."
+    },
+    "addLiabilityDialog": {
+      "title": "Add Loan/Debt",
+      "nameLabel": "Name",
+      "typeLabel": "Type",
+      "startingBalanceLabel": "Starting Balance",
+      "interestRateLabel": "Interest Rate (%)",
+      "minimumPaymentLabel": "Minimum Payment",
+      "paymentDueDayLabel": "Payment Due Day",
+      "paymentDueDayHint": "Day of the month when payment is due (1-31)",
+      "loanStartDateLabel": "Loan Start Date",
+      "loanStartDateHint": "Needed to calculate the full amortization schedule",
+      "successToast": "Loan/debt created."
+    },
+    "assetDetail": {
+      "metaTitle": "Asset | CoreBudget",
+      "backLink": "Net Worth",
+      "currentValueLabel": "Current Value",
+      "updateValueButton": "Update Value",
+      "editButton": "Edit",
+      "valueDateLabel": "Date",
+      "chartTitle": "Value Over Time",
+      "notEnoughHistoryForChart": "Record at least two values to see a chart.",
+      "historyTitle": "Value History",
+      "noHistory": "No value history yet.",
+      "updateValueSuccessToast": "Value updated.",
+      "deleteSuccessToast": "Asset deleted.",
+      "deleteConfirmTitle": "Delete this asset?",
+      "deleteConfirmDescription": "This permanently deletes the asset and its full value history. This can't be undone."
+    },
+    "tbd": "TBD",
+    "liabilityDetail": {
+      "metaTitle": "Liability | CoreBudget",
+      "backLink": "Net Worth",
+      "startingBalanceLabel": "Starting Balance",
+      "currentBalanceLabel": "Remaining Balance",
+      "percentPaidOffLabel": "Paid Off",
+      "interestPaidLabel": "Interest Paid",
+      "interestRateLabel": "Interest Rate",
+      "minimumPaymentLabel": "Minimum Payment",
+      "paymentDayLabel": "Payment Day",
+      "editButton": "Edit",
+      "recordPaymentButton": "Record a Payment",
+      "importCsvButton": "Import CSV",
+      "paymentAccountLabel": "Pay From",
+      "noAccountOption": "None",
+      "simpleModeButton": "Just the Amount",
+      "breakdownModeButton": "Break Down Principal & Interest",
+      "paymentAmountLabel": "Amount",
+      "paymentDateLabel": "Date",
+      "escrowAmountLabel": "Escrow Portion",
+      "notesLabel": "Notes",
+      "payoffDateLabel": "Projected Payoff Date",
+      "noProjection": "Not enough information to project a payoff date. Check the interest rate and minimum payment.",
+      "disclaimer": "The calculated amortization schedule may not align perfectly with your bank's calculations. Periodically update your balance and interest paid based on your actual statements to keep this accurate.",
+      "amortizationTitle": "Amortization Schedule",
+      "showCompleted": "Show Completed ({count})",
+      "noSchedule": "No schedule available. Check the interest rate and minimum payment.",
+      "noLoanStartDate": "Set a loan start date to see the amortization schedule.",
+      "monthColumn": "Month",
+      "dateColumn": "Date",
+      "paymentColumn": "Payment",
+      "principalColumn": "Principal",
+      "interestColumn": "Interest",
+      "endingBalanceColumn": "Ending Balance",
+      "historyTitle": "Payment History",
+      "paymentCount": "{count, plural, one {# payment} other {# payments}}",
+      "noHistory": "No payments logged yet.",
+      "escrowTitle": "Escrow",
+      "escrowBalanceLabel": "Escrow Balance",
+      "escrowTypeColumn": "Type",
+      "escrowDeposit": "Deposit",
+      "escrowDisbursement": "Disbursement",
+      "addDisbursementButton": "Add Disbursement",
+      "editDisbursementTitle": "Edit Disbursement",
+      "disbursementUpdatedToast": "Disbursement updated.",
+      "disbursementDeletedToast": "Disbursement deleted.",
+      "deleteDisbursementConfirmTitle": "Delete this disbursement?",
+      "deleteDisbursementConfirmDescription": "This removes the disbursement and recalculates the escrow balance for every later entry. This can't be undone.",
+      "recalculateButton": "Recalculate Balances",
+      "updateBalanceButton": "Update Balance",
+      "updateBalanceHint": "Don't want to log every past payment? Just set the current balance (and interest paid to date) directly. Paid Off % updates from this.",
+      "updateBalanceSuccessToast": "Balance updated.",
+      "noEscrowHistory": "No escrow history yet.",
+      "paymentSuccessToast": "Payment recorded.",
+      "editPaymentTitle": "Edit Payment",
+      "paymentUpdatedToast": "Payment updated.",
+      "paymentDeletedToast": "Payment deleted.",
+      "deletePaymentConfirmTitle": "Delete this payment?",
+      "deletePaymentConfirmDescription": "This removes the payment and recalculates the balance and history for every later payment. This can't be undone.",
+      "deleteSuccessToast": "Loan/debt deleted.",
+      "deleteConfirmTitle": "Delete this loan/debt?",
+      "deleteConfirmDescription": "This permanently deletes the liability and its full payment and escrow history. This can't be undone."
+    },
+    "assetTypes": {
+      "property": "Property",
+      "land": "Land",
+      "vehicle": "Vehicle",
+      "investment": "Investment",
+      "other": "Other"
+    },
+    "liabilityTypes": {
+      "mortgage": "Mortgage",
+      "autoLoan": "Auto Loan",
+      "studentLoan": "Student Loan",
+      "medicalDebt": "Medical Debt",
+      "personalLoan": "Personal Loan"
+    },
+    "errors": {
+      "readOnly": "You have read-only access to Net Worth.",
+      "nameRequired": "Enter a name.",
+      "assetNotFound": "Asset not found.",
+      "liabilityNotFound": "Liability not found.",
+      "paymentNotFound": "Payment not found.",
+      "disbursementNotFound": "Disbursement not found.",
+      "invalidAccount": "Choose a valid cash account.",
+      "invalidAmount": "Enter an amount greater than zero.",
+      "importEmpty": "That file has no rows to import.",
+      "importTooLarge": "That file has too many rows to import at once (max 500). Split it up and try again.",
+      "importRowInvalid": "One or more rows have an invalid date or amount. Check your CSV and try again. No rows were imported.",
+      "loanStartDateRequired": "Enter the loan start date."
+    }
+  },
+  "transactions": {
+    "searchPlaceholder": "Search transactions…",
+    "tour": {
+      "search": {
+        "title": "Find a transaction",
+        "description": "Search by payee or memo, and use Filters to narrow by date range or view options."
+      },
+      "table": {
+        "title": "Your ledger",
+        "description": "Click the empty row to add a transaction, or click an existing one to edit it. Split a transaction across multiple categories from here too."
+      }
+    },
+    "toolbar": {
+      "addTransaction": "Add Transaction",
+      "recordPayment": "Record Payment",
+      "reconcile": "Reconcile",
+      "importCsv": "Import CSV",
+      "view": "Filters",
+      "expandAll": "Expand All",
+      "collapseAll": "Collapse All",
+      "duplicateSuccess": "Transaction duplicated."
+    },
+    "table": {
+      "columns": {
+        "date": "Date",
+        "payee": "Payee",
+        "category": "Category",
+        "memo": "Memo",
+        "debit": "Debit",
+        "credit": "Credit",
+        "runningBalance": "Balance",
+        "cleared": "C"
+      },
+      "addPlaceholder": "Click to add a transaction…",
+      "empty": "No transactions yet.",
+      "splitLabel": "Split",
+      "splitCategoryLabel": "Split (Multiple Categories)...",
+      "uncategorized": "Uncategorized",
+      "expandSplits": "Expand splits",
+      "collapseSplits": "Collapse splits",
+      "reconciledLocked": "Reconciled, locked",
+      "clearedToggleOn": "Cleared, click to unclear",
+      "clearedToggleOff": "Not cleared, click to clear",
+      "clearedStatus": "Cleared",
+      "pendingStatus": "Pending",
+      "sortAscending": "Sorted ascending, click to sort descending",
+      "sortDescending": "Sorted descending, click to sort ascending",
+      "sortInactive": "Click to sort"
+    },
+    "viewFilters": {
+      "title": "View Filters",
+      "dateRangeLabel": "Date Range",
+      "presets": {
+        "thisMonth": "This Month",
+        "last3Months": "Last 3 Months",
+        "thisYear": "This Year",
+        "lastYear": "Last Year",
+        "allDates": "All Dates"
+      },
+      "fromLabel": "From",
+      "toLabel": "To",
+      "yearLabel": "Year",
+      "fromMonthLabel": "From month",
+      "fromYearLabel": "From year",
+      "toMonthLabel": "To month",
+      "toYearLabel": "To year",
+      "viewOptionsLabel": "View Options",
+      "showReconciled": "Show Reconciled Transactions",
+      "showRunningBalance": "Show Running Balance"
+    },
+    "form": {
+      "categoryPlaceholder": "Category…",
+      "payeePlaceholder": "Payee",
+      "memoPlaceholder": "Memo",
+      "amountPlaceholder": "0.00",
+      "categoryLabel": "Category",
+      "payeeLabel": "Payee",
+      "memoLabel": "Memo",
+      "debitLabel": "Debit amount",
+      "creditLabel": "Credit amount",
+      "postDateLabel": "Post date",
+      "clearedCheckboxTitle": "Cleared",
+      "reconciledLockedTitle": "Reconciled, locked cleared",
+      "saveAndNew": "Save & New"
+    },
+    "splits": {
+      "header": "Splits",
+      "addSplit": "Add split",
+      "removeSplit": "Remove split",
+      "cancelSplit": "Cancel split",
+      "splitIntoMultiple": "Split into multiple categories",
+      "totals": "Splits debit {debit} · credit {credit}"
+    },
+    "bulk": {
+      "selectedCount": "{count} selected",
+      "categorize": "Categorize",
+      "categorizeDialogTitle": "Categorize {count, plural, one {# transaction} other {# transactions}}",
+      "setCleared": "Set Cleared",
+      "duplicate": "Duplicate",
+      "makeRepeating": "Make Repeating",
+      "makeRepeatingSuccess": "Repeating transaction created.",
+      "deleteConfirm": {
+        "title": "Delete Transactions",
+        "description": "Delete {count, plural, one {this transaction} other {these # transactions}}? This can't be undone."
+      }
+    },
+    "deleteOneConfirm": {
+      "title": "Delete Transaction",
+      "description": "Delete this transaction? This can't be undone."
+    },
+    "needsReview": {
+      "title": "Needs Review ({count})",
+      "selectAll": "Select all",
+      "collapse": "Collapse",
+      "expand": "Expand",
+      "scheduledBadge": "Scheduled",
+      "importedBadge": "Imported",
+      "approve": "Approve",
+      "reject": "Reject",
+      "approveSelected": "Approve Selected",
+      "rejectSelected": "Reject Selected",
+      "approveSuccess": "Transaction approved.",
+      "rejectSuccess": "Transaction rejected."
+    },
+    "upcomingRepeating": {
+      "title": "Upcoming Repeating Transactions ({count})",
+      "next": "Next {date}"
+    },
+    "balance": {
+      "cleared": "Cleared",
+      "uncleared": "Uncleared",
+      "working": "Working",
+      "uncategorizedPill": "Uncategorized: {amount}",
+      "lastReconciled": "Last reconciled {date}"
+    },
+    "header": {
+      "paymentDueDay": "Due on the {day, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}",
+      "cardExpiration": "Expires {date}"
+    },
+    "reconcile": {
+      "title": "Reconcile Account",
+      "body": "This marks every cleared transaction on this account as reconciled. Current cleared balance:",
+      "success": "Account reconciled."
+    },
+    "importCsv": {
+      "amountLabel": "Amount",
+      "amountHint": "A single signed amount column (e.g. Chase). Skip this if your file has separate Debit and Credit columns instead, and map those below.",
+      "typeLabel": "Type",
+      "typeHint": "Not imported: rows where this is \"Payment\" (e.g. a credit card payment, already tracked separately) are excluded from the import.",
+      "skippedDuplicatesToast": "Skipped {count} likely duplicate {count, plural, one {transaction} other {transactions}}."
+    },
+    "errors": {
+      "readOnly": "You have read-only access to Transactions.",
+      "accountNotFound": "Account not found.",
+      "onlyOneAmount": "Only one of Debit or Credit can be filled.",
+      "amountRequired": "Enter a Debit or Credit amount.",
+      "payeeRequired": "Enter a payee.",
+      "dateRequired": "Enter a date.",
+      "invalidSplitsPayload": "Invalid splits payload.",
+      "addAtLeastOneSplit": "Add at least one split.",
+      "splitCategoryRequired": "Choose a category for each split.",
+      "splitsMismatch": "Splits must add up to the transaction's total amount.",
+      "transactionNotFound": "Transaction not found.",
+      "transactionNotPending": "This transaction isn't awaiting approval.",
+      "importRowInvalid": "Each row needs a valid date and payee.",
+      "importEmpty": "The file has no rows to import.",
+      "importTooLarge": "Import is limited to 500 rows at a time."
+    }
+  },
+  "reports": {
+    "layout": {
+      "title": "Reports",
+      "tabs": {
+        "incomeExpense": "Income & Expenses",
+        "paychecks": "Paychecks",
+        "netWorth": "Net Worth Over Time",
+        "budgetVsActual": "Budget vs. Actual",
+        "payee": "Spending by Payee",
+        "goalProgress": "Category Goal Progress",
+        "debtPayoff": "Debt Payoff Timeline",
+        "cashFlow": "Cash Flow"
+      },
+      "tour": {
+        "title": "Explore your reports",
+        "description": "Income & expenses, net worth over time, budget vs. actual, spending by payee, and more, each a click away."
+      }
+    },
+    "incomeExpense": {
+      "metaTitle": "Income & Expenses | Reports | CoreBudget",
+      "title": "Income & Expenses",
+      "subtitle": "Income and spending by category, month by month, for the selected year.",
+      "incomeTitle": "Income",
+      "expenseTitle": "Expenses",
+      "totalColumn": "Total",
+      "avgColumn": "Avg",
+      "empty": "No categories to report on yet."
+    },
+    "paychecks": {
+      "metaTitle": "Paychecks | Reports | CoreBudget",
+      "title": "Paychecks",
+      "subtitle": "Household income across every job, broken out by person and pay period.",
+      "grossLabel": "Gross Income",
+      "federalTaxLabel": "Federal Tax",
+      "oasdiLabel": "OASDI",
+      "medicareLabel": "Medicare",
+      "stateTaxLabel": "State Tax",
+      "employee401kLabel": "401k (Employee)",
+      "employer401kLabel": "401k (Employer)",
+      "employerContributionsLabel": "Employer Contributions",
+      "total401kLabel": "401k (Total)",
+      "contributions401kTitle": "401k Contributions",
+      "netPayLabel": "Net Pay",
+      "empty": "No paychecks logged for this year."
+    },
+    "netWorth": {
+      "metaTitle": "Net Worth Over Time | Reports | CoreBudget",
+      "title": "Net Worth Over Time",
+      "subtitle": "Cash, credit, assets, and liabilities combined into one trend line by month.",
+      "changeLabel": "{year} change",
+      "chartLabel": "Net Worth",
+      "notEnoughData": "Not enough history yet to chart this year."
+    },
+    "budgetVsActual": {
+      "metaTitle": "Budget vs. Actual | Reports | CoreBudget",
+      "title": "Budget vs. Actual",
+      "subtitle": "The plan as it stood at the start of each month, compared to what actually happened.",
+      "plannedLegend": "Planned",
+      "actualLegend": "Actual",
+      "bySectionTitle": "By Section ({month})",
+      "empty": "No plan snapshots captured for this year yet."
+    },
+    "payee": {
+      "metaTitle": "Spending by Payee | Reports | CoreBudget",
+      "title": "Spending by Payee",
+      "subtitle": "Total spend per payee for the selected year.",
+      "txnCount": "{count, plural, one {# txn} other {# txns}}",
+      "empty": "No transactions for this year yet."
+    },
+    "goalProgress": {
+      "metaTitle": "Category Goal Progress | Reports | CoreBudget",
+      "title": "Category Goal Progress",
+      "subtitle": "Every savings goal at once, on track vs. underfunded.",
+      "targetWithDate": "Target {amount} by {date}",
+      "targetNoDate": "Target {amount}",
+      "onTrackBadge": "On Track",
+      "underfundedBadge": "Underfunded",
+      "savedProgress": "{amount} saved ({pct}%)",
+      "monthlyProgress": "Needs {needed}/mo · contributing {contributing}/mo",
+      "empty": "No categories with a savings goal yet."
+    },
+    "debtPayoff": {
+      "metaTitle": "Debt Payoff Timeline | Reports | CoreBudget",
+      "title": "Debt Payoff Timeline",
+      "subtitle": "Every liability's payoff projection, combined into one debt-free date.",
+      "debtFreeLabel": "Debt-free by",
+      "noProjection": "Not projected",
+      "projectionTitle": "Remaining Balance Projection",
+      "projectionLegend": "Remaining Balance",
+      "byLiabilityTitle": "By Liability",
+      "payoffTbd": "TBD",
+      "empty": "No liabilities to report on yet."
+    },
+    "cashFlow": {
+      "metaTitle": "Cash Flow | Reports | CoreBudget",
+      "title": "Cash Flow",
+      "subtitle": "Net income minus expenses, month by month, for the selected year.",
+      "netLabel": "{year} net cash flow",
+      "chartLabel": "Net Cash Flow",
+      "empty": "No transactions for this year yet."
+    }
+  },
+  "budgetSettings": {
+    "layout": {
+      "title": "Settings",
+      "tabs": {
+        "categories": "Categories",
+        "accountsNetWorth": "Accounts & Net Worth",
+        "repeatingTransactions": "Repeating Transactions",
+        "payeeAutoCategorization": "Payee Auto-Categorization",
+        "auditLog": "Audit Log"
+      },
+      "tour": {
+        "title": "This budget's settings",
+        "description": "Categories, accounts, repeating transactions, payee auto-categorization rules, and the audit log all live here."
+      }
+    },
+    "accounts": {
+      "metaTitle": "Accounts & Net Worth | Settings | CoreBudget",
+      "title": "Accounts & Net Worth",
+      "subtitle": "Rename accounts, change their type, set a website, a credit account's payment due date and card expiration, and the order they appear in down the sidebar. Adding, closing, or deleting accounts is done from the account itself.",
+      "cashAccountsTitle": "Cash Accounts",
+      "noCashAccounts": "No cash accounts yet.",
+      "creditAccountsTitle": "Credit Accounts",
+      "noCreditAccounts": "No credit accounts yet.",
+      "accountNameLabel": "Account name",
+      "accountTypeLabel": "Account type",
+      "itemNameLabel": "Name",
+      "paymentDueDayLabel": "Payment Due Date",
+      "paymentDueDayValue": "Due on the {day, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}",
+      "noPaymentDueDate": "No due date set",
+      "websiteLabel": "Website",
+      "noWebsite": "No website set",
+      "cardExpirationLabel": "Card Expiration Date",
+      "noCardExpiration": "No expiration set",
+      "netWorthOrderTitle": "Net Worth Order",
+      "assetsTitle": "Assets",
+      "noAssets": "No assets yet.",
+      "liabilitiesTitle": "Liabilities",
+      "noLiabilities": "No liabilities yet."
+    },
+    "categories": {
+      "metaTitle": "Categories | Settings | CoreBudget",
+      "title": "Categories & Groups",
+      "subtitle": "Add, rename, hide, and reorder your budget groups and the categories inside them. A group or category with linked transactions can't be deleted; hide it instead.",
+      "hideGroup": "Hide group",
+      "unhideGroup": "Unhide group",
+      "deleteGroup": "Delete group",
+      "hiddenPill": "Hidden",
+      "hideCategory": "Hide category",
+      "unhideCategory": "Unhide category",
+      "deleteCategory": "Delete category",
+      "deleteGroupConfirm": {
+        "title": "Delete Group",
+        "description": "Delete this group? This can't be undone."
+      },
+      "deleteCategoryConfirm": {
+        "title": "Delete Category",
+        "description": "Delete this category? This can't be undone."
+      },
+      "hasHistoryTitle": "Has linked transactions, hide instead",
+      "newCategoryPlaceholder": "New category name",
+      "addCategoryButton": "Add",
+      "newGroupPlaceholder": "New group name",
+      "addGroupButton": "Add Group",
+      "groupNameLabel": "Group name",
+      "groupTypeLabel": "Group type",
+      "categoryNameLabel": "Category name",
+      "sectionTypes": {
+        "expense": "Expense",
+        "income": "Income",
+        "savings": "Savings",
+        "ccPayment": "CC Payment"
+      }
+    },
+    "errors": {
+      "readOnly": "You have read-only access to Settings.",
+      "nameRequired": "Enter a name.",
+      "accountNotFound": "Account not found.",
+      "assetNotFound": "Asset not found.",
+      "liabilityNotFound": "Liability not found.",
+      "invalidAccountType": "Invalid account type.",
+      "invalidPaymentDueDay": "Enter a day of the month between 1 and 31.",
+      "invalidCardExpiration": "Enter the card expiration as MM/YYYY.",
+      "sectionNotFound": "Section not found.",
+      "categoryNotFound": "Category not found.",
+      "invalidSectionType": "Invalid section type.",
+      "groupNotEmpty": "Delete or hide every category in this group first.",
+      "categoryHasHistory": "This category has history and can't be deleted. Hide it instead."
+    },
+    "repeating": {
+      "metaTitle": "Repeating Transactions | Settings | CoreBudget",
+      "title": "Repeating Transactions",
+      "subtitle": "Manage recurring transactions. They'll post to Needs Review on their account when due, and only count once approved.",
+      "addButton": "Add Repeating Transaction",
+      "empty": "No repeating transactions yet.",
+      "nextOn": "Next: {date}",
+      "inactive": "Inactive",
+      "managedBySubscription": "Managed by Subscriptions",
+      "editNextOccurrence": "Edit Next Occurrence",
+      "deactivate": "Deactivate",
+      "reactivate": "Reactivate",
+      "hasHistoryTitle": "Has generated transactions, deactivate instead",
+      "hasHistoryToast": "This repeating transaction has already generated transactions. Deactivate it instead.",
+      "deleteConfirm": {
+        "title": "Delete Repeating Transaction",
+        "description": "Delete this repeating transaction? This can't be undone."
+      },
+      "form": {
+        "account": "Account",
+        "cadence": "Cadence",
+        "nextOccurrence": "Next Occurrence"
+      },
+      "cadences": {
+        "weekly": "Weekly",
+        "biweekly": "Biweekly",
+        "monthly": "Monthly",
+        "every_3_months": "Every 3 Months",
+        "every_4_months": "Every 4 Months",
+        "yearly": "Yearly"
+      },
+      "errors": {
+        "readOnly": "You have read-only access to Repeating Transactions.",
+        "accountRequired": "Choose an account.",
+        "accountNotFound": "Account not found.",
+        "invalidCadence": "Choose a valid cadence.",
+        "dateRequired": "Enter a next occurrence date.",
+        "notFound": "Repeating transaction not found.",
+        "managedBySubscription": "This repeating transaction is managed by its linked subscription. Edit it from Subscriptions instead.",
+        "hasHistory": "This repeating transaction has already generated transactions. Deactivate it instead."
+      }
+    },
+    "auditLog": {
+      "metaTitle": "Audit Log | Settings | CoreBudget",
+      "title": "Audit Log",
+      "subtitle": "A history of changes made within this budget, newest first.",
+      "empty": "No activity yet.",
+      "dateColumn": "Date",
+      "userColumn": "User",
+      "changeColumn": "Change",
+      "retentionFooter": "History is kept for 2 years."
+    },
+    "payeeCategorization": {
+      "metaTitle": "Payee Auto-Categorization | Settings | CoreBudget",
+      "title": "Payee Auto-Categorization",
+      "subtitle": "Automatically assign a category to a payee's transactions in this budget.",
+      "empty": "No auto-categorization rules yet.",
+      "addButton": "Add Mapping",
+      "payeeLabel": "Payee",
+      "categoryLabel": "Category",
+      "payeeSearchPlaceholder": "Search payees…",
+      "categorySearchPlaceholder": "Search categories…",
+      "inertNote": "Inactive: enable auto-categorization for this payee in Admin to apply it",
+      "deleteConfirm": {
+        "title": "Delete Mapping",
+        "description": "Delete this payee auto-categorization mapping? This can't be undone."
+      },
+      "errors": {
+        "readOnly": "You have read-only access to Settings.",
+        "payeeRequired": "Choose a payee.",
+        "categoryRequired": "Choose a category.",
+        "payeeNotFound": "Payee not found.",
+        "categoryNotFound": "Category not found."
+      }
+    }
+  },
+  "subscriptions": {
+    "metaTitle": "Subscriptions | CoreBudget",
+    "title": "Subscriptions",
+    "subtitle": "Recurring subscriptions & memberships, each backed by a Repeating Transaction.",
+    "addButton": "Add Subscription",
+    "empty": "No subscriptions yet.",
+    "searchPlaceholder": "Search subscriptions…",
+    "tour": {
+      "summary": {
+        "title": "Your subscription spend",
+        "description": "Monthly total, yearly total, and how many are currently active, at a glance."
+      },
+      "search": {
+        "title": "Find & filter",
+        "description": "Search by name, or use Filters to narrow by category, account, or status."
+      }
+    },
+    "noSearchResults": "No subscriptions match your search.",
+    "filters": {
+      "title": "Filters",
+      "all": "All",
+      "status": "Status",
+      "cadence": "Cadence",
+      "category": "Category",
+      "account": "Account",
+      "autoRenew": "Auto-Renewal",
+      "autoRenewOn": "On",
+      "autoRenewOff": "Off",
+      "clear": "Clear Filters"
+    },
+    "renewsOn": "Renews {date}",
+    "pause": "Pause",
+    "resume": "Resume",
+    "cancel": "Cancel",
+    "cancelConfirmTitle": "Cancel subscription?",
+    "cancelConfirmDescription": "This marks \"{name}\" as canceled and moves it out of your active subscriptions. Its history is kept, and you can change its status back to active from Edit if this was a mistake.",
+    "cardExpiringBadge": "Card Expiring",
+    "chargedAsSubtitle": "Charged as {payeeName}",
+    "autoRenewOnSubtitle": "Auto-renew on",
+    "autoRenewOffSubtitle": "Auto-renew off",
+    "autoRenewEnabled": "Enabled",
+    "autoRenewDisabled": "Disabled",
+    "everyNWeeksValue": "Every {weeks} Weeks",
+    "summary": {
+      "monthlyTotal": "Monthly Total",
+      "yearlyTotal": "Yearly Total",
+      "active": "Active"
+    },
+    "sections": {
+      "active": "Active ({count})",
+      "paused": "Paused ({count})",
+      "canceled": "Canceled ({count})"
+    },
+    "detail": {
+      "amount": "Amount",
+      "payee": "Payee",
+      "cadence": "Cadence",
+      "nextRenewal": "Next Renewal",
+      "account": "Account",
+      "category": "Category",
+      "status": "Status",
+      "autoRenewal": "Auto-Renewal",
+      "cardExpiring": "Card Expiring",
+      "website": "Website",
+      "trialEnd": "Trial End",
+      "notes": "Notes"
+    },
+    "cadences": {
+      "monthly": "Monthly",
+      "quarterly": "Quarterly",
+      "yearly": "Yearly",
+      "every_n_weeks": "Every N Weeks"
+    },
+    "statuses": {
+      "active": "Active",
+      "paused": "Paused",
+      "canceled": "Canceled"
+    },
+    "form": {
+      "name": "Name",
+      "payee": "Payee",
+      "website": "Website",
+      "amount": "Amount",
+      "everyNWeeks": "Every N Weeks",
+      "renewalDate": "Renewal Date",
+      "trialEndDate": "Trial End Date",
+      "status": "Status",
+      "autoRenew": "Auto-renew",
+      "notes": "Notes"
+    },
+    "errors": {
+      "readOnly": "You have read-only access to Subscriptions.",
+      "nameRequired": "Enter a name.",
+      "payeeRequired": "Enter who actually charges this: the merchant name on your statement.",
+      "amountRequired": "Enter an amount.",
+      "invalidCadence": "Choose a valid cadence.",
+      "intervalWeeksRequired": "Enter how many weeks between occurrences.",
+      "renewalDateRequired": "Choose a renewal date.",
+      "accountRequired": "Choose an account.",
+      "accountNotFound": "That account could not be found.",
+      "notFound": "That subscription could not be found."
+    }
+  },
+  "settings": {
+    "layout": {
+      "title": "User Settings",
+      "tabs": {
+        "profile": "Profile",
+        "security": "Password & Security",
+        "localization": "Timezone & Locale",
+        "preferences": "Preferences"
+      },
+      "tour": {
+        "title": "Your personal settings",
+        "description": "Profile, password & security, timezone & locale, and your default preferences for sorting and pagination all live here."
+      }
+    },
+    "profile": {
+      "metaTitle": "Profile | User Settings | CoreBudget",
+      "title": "Profile",
+      "subtitle": "Your name and email as they appear across CoreBudget.",
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "saveButton": "Save Changes",
+      "successToast": "Profile updated."
+    },
+    "security": {
+      "metaTitle": "Password & Security | User Settings | CoreBudget",
+      "title": "Password & Security",
+      "subtitle": "Update your password and manage two-factor authentication.",
+      "currentPasswordLabel": "Current Password",
+      "newPasswordLabel": "New Password",
+      "confirmPasswordLabel": "Confirm New Password",
+      "updatePasswordButton": "Update Password",
+      "passwordSuccessToast": "Password updated.",
+      "twoFactorTitle": "Two-Factor Authentication",
+      "twoFactorEnabledStatus": "Enabled",
+      "twoFactorDisabledStatus": "Not enabled",
+      "twoFactorResetButton": "Reset Two-Factor Authentication",
+      "twoFactorResetHint": "Lost your authenticator app? Reset to set up a new one the next time you sign in.",
+      "twoFactorResetDialogTitle": "Reset Two-Factor Authentication",
+      "twoFactorResetDialogBody": "Enter your current password to confirm. You'll be asked to set up a new authenticator app the next time you sign in.",
+      "twoFactorResetConfirmButton": "Reset",
+      "twoFactorResetSuccessToast": "Two-factor authentication reset.",
+      "sessionsTitle": "Active Sessions",
+      "sessionsSubtitle": "Devices currently signed in to your account.",
+      "unknownDevice": "Unknown device",
+      "currentDeviceBadge": "This device",
+      "revokeButton": "Revoke",
+      "revokeSuccessToast": "Session revoked.",
+      "startedLabel": "Started {date}",
+      "lastActiveLabel": "Last active {date}",
+      "noOtherSessions": "No other devices are signed in.",
+      "loginHistoryTitle": "Login History",
+      "loginHistorySubtitle": "Recent sign-in attempts on your account.",
+      "loginResults": {
+        "success": "Success",
+        "failed_password": "Wrong password",
+        "failed_2fa": "Wrong code"
+      },
+      "noLoginHistory": "No login history yet."
+    },
+    "localization": {
+      "metaTitle": "Timezone & Locale | User Settings | CoreBudget",
+      "title": "Timezone & Locale",
+      "subtitle": "Controls dates and times shown throughout CoreBudget.",
+      "timezoneLabel": "Timezone",
+      "dateFormatLabel": "Date Format",
+      "languageLabel": "Language",
+      "saveButton": "Save Changes",
+      "successToast": "Preferences updated.",
+      "languages": {
+        "en": "English"
+      }
+    },
+    "errors": {
+      "nameRequired": "Enter your name.",
+      "emailRequired": "Enter your email.",
+      "emailInvalid": "Enter a valid email address.",
+      "emailTaken": "That email is already in use.",
+      "currentPasswordRequired": "Enter your current password.",
+      "incorrectCurrentPassword": "That password is incorrect.",
+      "cannotRevokeCurrentSession": "You can't revoke your current session.",
+      "sessionNotFound": "That session could not be found.",
+      "invalidLocale": "Choose a valid language.",
+      "invalidTimezone": "Choose a valid timezone.",
+      "invalidDateFormat": "Choose a valid date format.",
+      "invalidPageKey": "That page isn't recognized.",
+      "invalidPageSize": "Choose a valid page size.",
+      "invalidSortColumn": "Choose a valid sort column.",
+      "invalidSortDirection": "Choose a valid sort direction.",
+      "invalidDatePreset": "Choose a valid date range."
+    },
+    "preferences": {
+      "metaTitle": "Preferences | User Settings | CoreBudget",
+      "title": "Preferences",
+      "subtitle": "Personal defaults for how pages and lists behave when you haven't set your own choice yet.",
+      "collapsedLabel": "Collapsed",
+      "expandedLabel": "Expanded",
+      "sidebarCardTitle": "Sidebar Sections",
+      "sidebarCardSubtitle": "Which sidebar groups start expanded.",
+      "sidebarAccountsLabel": "Accounts starts expanded",
+      "sidebarNetWorthLabel": "Net Worth starts expanded",
+      "sidebarVisibilityCardTitle": "Sidebar Auto-Collapse",
+      "sidebarVisibilityCardSubtitle": "Whether the sidebar automatically collapses or stays expanded when each page loads.",
+      "transactionsCardTitle": "Transactions",
+      "transactionsCardSubtitle": "Defaults used the first time you open an account's ledger. An account you've already customized keeps its own saved view.",
+      "defaultSortColumnLabel": "Default sort column",
+      "defaultSortDirectionLabel": "Default sort direction",
+      "sortDirectionAscending": "Ascending",
+      "sortDirectionDescending": "Descending",
+      "defaultDateRangeLabel": "Default date range",
+      "planCardTitle": "Plan",
+      "planCardSubtitle": "Default state for the Plan page's section cards.",
+      "planSectionsDefaultOpenLabel": "Sections start expanded",
+      "budgetCardTitle": "Budget",
+      "budgetCardSubtitle": "Default state for the Budget page's section groups.",
+      "budgetSectionsDefaultOpenLabel": "Sections start expanded",
+      "paginationCardTitle": "Pagination",
+      "paginationCardSubtitle": "Default rows per page for every paginated list you have access to.",
+      "paginationEmpty": "You don't have access to any paginated pages.",
+      "pages": {
+        "auditLog": "Settings: Audit Log",
+        "liabilityDetail": "Net Worth: Liability Detail",
+        "adminBackups": "Admin: Backups",
+        "adminJobHistory": "Admin: Job History",
+        "adminErrorLog": "Admin: Error Log",
+        "adminHouseholds": "Admin: Households",
+        "adminPayees": "Admin: Payees",
+        "adminPayeeDetail": "Admin: Payee Detail",
+        "adminUsers": "Admin: Users",
+        "adminUserDetail": "Admin: User Detail"
+      },
+      "sidebarPages": {
+        "dashboard": "Dashboard",
+        "accountDetail": "Account Detail",
+        "budget": "Budget",
+        "plan": "Plan",
+        "netWorthList": "Net Worth (list)",
+        "netWorthDetail": "Net Worth Detail",
+        "reports": "Reports",
+        "subscriptions": "Subscriptions",
+        "incomeCalculator": "Income Calculator",
+        "budgetSettings": "Settings",
+        "settings": "User Settings",
+        "admin": "Admin"
+      }
+    },
+    "taxRetirement": {
+      "layout": {
+        "title": "Tax & Retirement",
+        "tabs": {
+          "accounts": "Retirement Accounts",
+          "filing": "Tax Filing",
+          "withholding": "Withholding Tracker",
+          "goal": "Retirement Goal"
+        }
+      },
+      "accounts": {
+        "metaTitle": "Retirement Accounts | Tax & Retirement | CoreBudget",
+        "title": "Retirement Accounts",
+        "subtitle": "Track balances and contribution rates for your 401(k) and IRA accounts.",
+        "total": "Total:",
+        "balanceLabel": "Balance",
+        "contributionLabel": "Contribution %",
+        "typeLabel": "Account type",
+        "deleteButton": "Delete",
+        "empty": "No retirement accounts yet.",
+        "namePlaceholder": "Account name",
+        "balancePlaceholder": "Balance",
+        "contributionPlaceholder": "Contrib %",
+        "addButton": "Add",
+        "deleteConfirm": {
+          "title": "Delete Retirement Account",
+          "description": "Delete this retirement account? This can't be undone."
+        },
+        "types": {
+          "four01k": "401(k)",
+          "ira": "IRA",
+          "rothIra": "Roth IRA",
+          "pension": "Pension"
+        }
+      },
+      "filing": {
+        "metaTitle": "Tax Filing | Tax & Retirement | CoreBudget",
+        "title": "Tax Filing",
+        "subtitle": "Your filing status and tax rates feed the Income Calculator's paycheck estimates.",
+        "filingStatusLabel": "Filing Status",
+        "stateTaxRateLabel": "State Tax Rate",
+        "socialSecurityRateLabel": "Social Security Rate",
+        "medicareRateLabel": "Medicare Rate",
+        "contributionRateLabel": "401(k) Contribution Rate",
+        "matchRateLabel": "401(k) Match Rate",
+        "maxContributionLabel": "401(k) Max Contribution",
+        "standardDeductionLabel": "Standard Deduction",
+        "childDependencyCreditLabel": "Child Dependency Credit",
+        "otherDependencyCreditLabel": "Other Dependency Credit",
+        "eligibleChildDependentsLabel": "Eligible Child Dependents",
+        "eligibleOtherDependentsLabel": "Eligible Other Dependents",
+        "studentLoanCapLabel": "Student Loan Interest Cap",
+        "saveButton": "Save Changes",
+        "successToast": "Tax settings updated.",
+        "filingStatuses": {
+          "single": "Single",
+          "marriedJointly": "Married Filing Jointly",
+          "marriedSeparately": "Married Filing Separately",
+          "headOfHousehold": "Head of Household"
+        }
+      },
+      "withholding": {
+        "metaTitle": "Withholding Tracker | Tax & Retirement | CoreBudget",
+        "title": "Withholding Tracker",
+        "subtitle": "Compare what's been withheld this year against your estimated tax liability.",
+        "ytdWithheldLabel": "YTD Withheld",
+        "estimatedLiabilityLabel": "Estimated Tax Liability",
+        "withheldPct": "{pct}% withheld",
+        "saveButton": "Save Changes",
+        "successToast": "Withholding updated."
+      },
+      "goal": {
+        "metaTitle": "Retirement Goal | Tax & Retirement | CoreBudget",
+        "title": "Retirement Goal",
+        "subtitle": "Set a target nest egg and age, and track your current progress.",
+        "targetSavingsLabel": "Target Savings",
+        "targetAgeLabel": "Target Age",
+        "ofGoalPct": "{pct}% of goal",
+        "saveButton": "Save Changes",
+        "successToast": "Retirement goal updated."
+      },
+      "errors": {
+        "invalidFilingStatus": "Choose a valid filing status.",
+        "nameRequired": "Enter an account name.",
+        "invalidType": "Choose a valid account type.",
+        "balanceRequired": "Enter a balance.",
+        "invalidContribution": "Enter a valid contribution percentage.",
+        "accountNotFound": "That retirement account could not be found."
+      }
+    },
+    "jobs": {
+      "metaTitle": "Jobs | CoreBudget",
+      "title": "Jobs",
+      "subtitle": "Track your income sources: employers and pay schedule.",
+      "namePlaceholder": "Employer / income source",
+      "payPeriodLabel": "Pay period",
+      "activeStatus": "Active",
+      "inactiveStatus": "Inactive",
+      "deleteButton": "Delete",
+      "addButton": "Add Job",
+      "deleteConfirm": {
+        "title": "Delete Job",
+        "description": "Delete this job? This can't be undone."
+      },
+      "empty": "No jobs yet.",
+      "payPeriodTypes": {
+        "weekly": "Weekly (52/year)",
+        "biWeekly": "Biweekly (26/year)",
+        "semiMonthly": "Semi-Monthly (24/year)",
+        "monthly": "Monthly (12/year)"
+      },
+      "errors": {
+        "nameRequired": "Enter an employer or income source name.",
+        "invalidPayPeriod": "Choose a valid pay period.",
+        "jobNotFound": "That job could not be found.",
+        "hasHistory": "This job has paycheck history. Deactivate it instead of deleting."
+      }
+    },
+    "apiTokens": {
+      "metaTitle": "API Tokens | CoreBudget",
+      "title": "API Tokens",
+      "subtitle": "Read-only tokens for third-party integrations (Home Assistant, Grafana, Homarr). Each token is permanently scoped to one budget, chosen when you create it. Revoked tokens stop working immediately.",
+      "revealTitle": "Copy this token now, you won't see it again",
+      "revealBudgetLabel": "Scoped to: {budgetName}",
+      "budgetLabel": "Budget",
+      "doneButton": "Done",
+      "labelPlaceholder": "Token name (e.g., Home Assistant)",
+      "createButton": "Create Token",
+      "revokeButton": "Revoke",
+      "revokeSuccessToast": "Token revoked.",
+      "createdLabel": "Created {date}",
+      "lastUsedLabel": "Last used {date}",
+      "neverUsedLabel": "Never used",
+      "empty": "No API tokens yet.",
+      "errors": {
+        "labelRequired": "Enter a name for this token.",
+        "budgetRequired": "Choose a budget for this token.",
+        "tokenNotFound": "That token could not be found."
+      }
+    },
+    "notifications": {
+      "metaTitle": "Notification Settings | CoreBudget",
+      "title": "Notification Settings",
+      "subtitle": "Choose which alerts you want to see in-app and receive as push notifications.",
+      "inAppColumnLabel": "In-App",
+      "pushColumnLabel": "Push",
+      "inAppToggleAriaLabel": "Toggle in-app notifications for {type}",
+      "pushToggleAriaLabel": "Toggle push notifications for {type}",
+      "types": {
+        "uncategorizedTransactions": "Uncategorized Transactions",
+        "needsReview": "Needs Review",
+        "overBudget": "Over Budget",
+        "reconciliationDue": "Reconciliation Due",
+        "cardExpiring": "Card Expiring Soon"
+      },
+      "descriptions": {
+        "uncategorizedTransactions": "A transaction was approved without a category.",
+        "needsReview": "An imported or scheduled transaction is waiting for approval.",
+        "overBudget": "A category has been spent past its budgeted amount.",
+        "reconciliationDue": "An account hasn't been reconciled in a while.",
+        "cardExpiring": "A credit card on file is expiring within 30 days."
+      },
+      "errors": {
+        "invalidType": "Invalid notification type.",
+        "invalidField": "Invalid notification setting."
+      },
+      "pushSubscription": {
+        "title": "Push notifications on this device",
+        "subtitle": "Receive a real push notification here, even when CoreBudget isn't open.",
+        "toggleAriaLabel": "Toggle push notifications on this device",
+        "errors": {
+          "permissionDenied": "Notification permission was denied for this browser.",
+          "notConfigured": "Push notifications aren't configured on this server yet."
+        }
+      }
+    }
+  },
+  "plan": {
+    "metaTitle": "Plan | CoreBudget",
+    "title": "Plan",
+    "subtitle": "Set a target for each category once. Budget shows underfunded categories against these until you change them.",
+    "summaryTitle": "Budget Summary",
+    "summarySubtitle": "Overview of planned income and expenses",
+    "tour": {
+      "summary": {
+        "title": "Your budget at a glance",
+        "description": "Planned income, expenses, and what's left over, based on every target you set below."
+      },
+      "sections": {
+        "title": "Set a target for each category",
+        "description": "Open a group and set how much each category needs, monthly, by a due date, or as a savings goal. Budget compares against these automatically."
+      }
+    },
+    "totalIncomeLabel": "Total Income",
+    "totalExpensesLabel": "Total Expenses",
+    "availableCashLabel": "Available Cash",
+    "expandAll": "Expand All",
+    "collapseAll": "Collapse All",
+    "noCategoriesInSection": "No categories in this group.",
+    "sectionCategoryCount": "{count, plural, one {# category} other {# categories}} ·",
+    "noTarget": "No target",
+    "noTargetSet": "No target set for this category",
+    "perMonth": "{amount}/mo",
+    "perYear": "{amount}/yr",
+    "yearlyToggleLabel": "Yearly",
+    "setTargetButton": "Set Target",
+    "clearTargetButton": "Clear Target",
+    "tbd": "TBD",
+    "repeatTypes": {
+      "none": "None",
+      "monthly": "Monthly",
+      "quarterly": "Quarterly",
+      "yearly": "Yearly",
+      "longTerm": "Long Term"
+    },
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dec"
+    },
+    "editor": {
+      "repeatTypeLabel": "Repeat Type",
+      "repeatTypeHint": "How often this target repeats",
+      "targetAmountLabel": "Target Amount",
+      "targetAmountHint": "Monthly budget goal for this category",
+      "savingsTargetLabel": "Savings Target",
+      "savingsTargetHint": "Final savings goal amount",
+      "targetAmountAutoLabel": "Target Amount (auto)",
+      "targetAmountAutoHint": {
+        "monthly": "From Savings Per Month",
+        "quarterly": "From Savings Per Quarter",
+        "yearly": "From Savings Per Year"
+      },
+      "savingsPerMonthLabel": "Savings Per Month",
+      "dayOfMonthLabel": "Day of Month",
+      "fundingGoalLabel": "Monthly Funding Goal",
+      "fundingGoalReachTarget": "Ensure Available Equals Target",
+      "fundingGoalReachTargetHint": "Assign enough to reach target",
+      "fundingGoalAssignTarget": "Always Assign Target Amount",
+      "fundingGoalAssignTargetHint": "Ignores carryover",
+      "savingsPerQuarterLabel": "Savings Per Quarter",
+      "savingsPerYearAutoLabel": "Savings Per Year (auto)",
+      "quarterlyMonthsLabel": "Quarterly Payment Months (pick 4)",
+      "savingsPerYearLabel": "Savings Per Year",
+      "monthNeededByLabel": "Month Needed By",
+      "startDateLabel": "Start Date",
+      "targetDueDateLabel": "Target Due Date",
+      "monthlySavingsNeededLabel": "Monthly Savings Needed",
+      "annualSavingsNeededLabel": "Annual Savings Needed",
+      "notesLabel": "Notes",
+      "notesPlaceholder": "Add notes about this category…",
+      "saveButton": "Save Changes"
+    },
+    "errors": {
+      "readOnly": "You have read-only access to Plan.",
+      "categoryNotFound": "That category could not be found."
+    }
+  },
+  "budget": {
+    "metaTitle": "Budget | CoreBudget",
+    "title": "Budget",
+    "tour": {
+      "monthNav": {
+        "title": "Pick a month",
+        "description": "Any month, any time, is editable, there's no locking or unlocking a month here."
+      },
+      "readyToAssign": {
+        "title": "Ready to Assign",
+        "description": "Income that hasn't been given a job yet. The goal of zero-based budgeting is to get this to zero by assigning it all to categories."
+      },
+      "categoryTable": {
+        "title": "Assign every dollar",
+        "description": "Click into a category's Assigned column to set how much it gets this month. Carryover, Activity, and Available update as you go."
+      }
+    },
+    "expandAll": "Expand All",
+    "collapseAll": "Collapse All",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "selectMonth": "Select month",
+    "openSummary": "Open budget summary",
+    "closePanel": "Close panel",
+    "columnCategory": "Category",
+    "columnCarryover": "Carryover",
+    "columnAssigned": "Assigned",
+    "columnActivity": "Activity",
+    "columnAvailable": "Available",
+    "noCategoriesInSection": "No categories in this section.",
+    "toggleFavorite": "Toggle favorite",
+    "assignedInline": "Assigned {amount}",
+    "assignedAmountLabel": "{name} assigned amount",
+    "readyToAssignLabel": "Ready to Assign",
+    "summaryTitle": "Summary",
+    "summaryCategories": "Categories",
+    "summaryLeftover": "Leftover from last month",
+    "summaryAssigned": "Assigned",
+    "summaryActivity": "Activity",
+    "summaryAvailable": "Available",
+    "activityTitle": "Activity",
+    "activityEmpty": "No transactions this month.",
+    "debitLabel": "Debit",
+    "creditLabel": "Credit",
+    "noTargetSet": "No target set for this category",
+    "targetMet": "You've met your target!",
+    "targetUnderfunded": "Still underfunded",
+    "targetNeeded": "Needed this month",
+    "targetAssignedSoFar": "Assigned so far",
+    "targetToGo": "To go",
+    "goalPerMonth": "Save {amount}/month",
+    "goalByDate": "Save {amount} by {date}",
+    "goalFlat": "Target {amount}",
+    "tbd": "TBD",
+    "missingAssignments": "{count} category missing an assignment this month: {names}",
+    "createItButton": "Create it",
+    "autoAssignHeading": "{count} selected, Auto Assign:",
+    "autoAssignUnderfunded": "Assign underfunded",
+    "autoAssignResetAvailable": "Reset available to zero",
+    "autoAssignResetAssigned": "Reset assigned to zero",
+    "errors": {
+      "readOnly": "You have read-only access to Budget.",
+      "categoryNotFound": "That category could not be found.",
+      "invalidMonth": "That month isn't valid.",
+      "invalidAssigned": "Enter a valid amount.",
+      "invalidAutoAssignMode": "That Auto Assign action isn't recognized."
+    }
+  },
+  "notifications": {
+    "messages": {
+      "uncategorizedTransactions": "{count, plural, one {# uncategorized transaction} other {# uncategorized transactions}}",
+      "needsReview": "{count, plural, one {# transaction needs review} other {# transactions need review}}",
+      "overBudget": "{count, plural, one {# category over budget} other {# categories over budget}}",
+      "reconciliationDue": "{name} hasn't been reconciled in 30+ days",
+      "cardExpiring": "{name}'s card is expiring soon"
+    },
+    "bell": {
+      "empty": "No notifications yet.",
+      "clearAll": "Clear all",
+      "viewAll": "View all",
+      "markReadAriaLabel": "Mark as read",
+      "dismissAriaLabel": "Dismiss"
+    },
+    "page": {
+      "metaTitle": "Notifications | CoreBudget",
+      "title": "Notifications",
+      "subtitle": "Everything CoreBudget has flagged for your attention, including past items.",
+      "empty": "No notifications yet.",
+      "unreadTag": "Unread",
+      "archivedTag": "Archived",
+      "markRead": "Mark as read",
+      "delete": "Delete",
+      "loadMore": "Load more"
+    }
+  },
+  "dashboard": {
+    "metaTitle": "Dashboard | CoreBudget",
+    "title": "Dashboard",
+    "tour": {
+      "summary": {
+        "title": "Your summary at a glance",
+        "description": "Net worth, cash, credit, and more, updated as you go."
+      },
+      "currentMonthBudget": {
+        "title": "This month's budget",
+        "description": "A quick look at what's assigned, spent, and left over for the current month. Visit Budget for the full picture."
+      },
+      "recentTransactions": {
+        "title": "Recent activity",
+        "description": "Your most recent transactions across every account, so you can spot anything that needs attention."
+      }
+    },
+    "welcomeTitle": "Welcome, {name}",
+    "noWorkspaceSubtitle": "You don't have access to a budget yet. Ask a household admin to grant you access.",
+    "summaryNetWorth": "Net Worth",
+    "summaryTotalCash": "Total Cash",
+    "summaryTotalCredit": "Total Credit",
+    "summaryTotalAssets": "Total Assets",
+    "summaryTotalLoans": "Total Loans",
+    "favoriteCategoriesTitle": "Favorite Categories",
+    "favoriteCategoriesEmpty": "You haven't favorited any categories yet. Star a category on the Budget view to pin it here.",
+    "columnAssigned": "Assigned",
+    "columnActivity": "Activity",
+    "columnAvailable": "Available",
+    "actionItemsTitle": "Action Items",
+    "actionItemsEmpty": "Nothing needs your attention right now.",
+    "action_uncategorized": "{count, plural, one {# uncategorized transaction} other {# uncategorized transactions}}",
+    "action_needsReview": "{count, plural, one {# transaction needs review} other {# transactions need review}}",
+    "action_overBudget": "{count, plural, one {# category over budget} other {# categories over budget}}",
+    "action_reconciliation": "{count, plural, one {# account not reconciled in 30+ days} other {# accounts not reconciled in 30+ days}}",
+    "action_cardExpiring": "{count, plural, one {# card expiring soon with a subscription charged to it} other {# cards expiring soon with subscriptions charged to them}}",
+    "currentMonthBudgetTitle": "Current Month Budget: {month}",
+    "mostOverspentLabel": "Most overspent",
+    "debtPayoffTitle": "Debt Payoff Progress",
+    "debtPayoffEmpty": "No liabilities tracked yet.",
+    "recentTransactionsTitle": "Recent Transactions",
+    "recentTransactionsEmpty": "No transactions yet.",
+    "uncategorizedLabel": "Uncategorized",
+    "pendingBadge": "pending",
+    "upcomingScheduledTitle": "Upcoming Scheduled (30 Days)",
+    "upcomingScheduledEmpty": "Nothing scheduled in the next 30 days.",
+    "netChangeLabel": "Net change"
+  },
+  "incomeCalculator": {
+    "metaTitle": "Income Calculator | CoreBudget",
+    "title": "Income Calculator",
+    "subtitle": "Calculate your paycheck breakdown and save it as your job's template.",
+    "tour": {
+      "cards": {
+        "title": "Build your paycheck template",
+        "description": "Enter gross income, taxes, withholdings, and employer contributions, then save it as your job's template for next time."
+      },
+      "history": {
+        "title": "Logged paychecks",
+        "description": "Every paycheck you log is saved here, so you can compare pay periods and track changes over the year."
+      }
+    },
+    "noJobsSubtitle": "You don't have any jobs yet. Add one in Settings › Jobs to start building a paycheck calculator.",
+    "manageJobsLink": "Manage Jobs",
+    "editButton": "Edit",
+    "saveTemplateButton": "Save Template",
+    "templateSavedToast": "Template saved.",
+    "logPaycheckButton": "Log Paycheck",
+    "incomeCardTitle": "Income",
+    "taxesCardTitle": "Taxes",
+    "withholdingsCardTitle": "Withholdings",
+    "employerCardTitle": "Employer Contributions",
+    "grossIncomeLabel": "Gross Income",
+    "itemNamePlaceholder": "Name",
+    "itemAmountLabel": "Amount",
+    "calculationModeLabel": "{label} calculation mode",
+    "manualAmountLabel": "{label} amount",
+    "calculationTypeLabel": "Calculation type",
+    "yearLabel": "Year",
+    "addIncomeItem": "+ Add income item",
+    "addItem": "+ Add item",
+    "totalLabel": "Total",
+    "totalTaxesLabel": "Total Taxes",
+    "oasdiLabel": "OASDI (Social Security)",
+    "medicareLabel": "Medicare",
+    "stateTaxLabel": "State Tax",
+    "federalTaxLabel": "Federal Tax",
+    "autoOption": "Auto",
+    "manualOption": "Manual",
+    "fourOhOneKOption": "401k",
+    "fourOhOneKMatchOption": "401k Match",
+    "preTaxLabel": "Pre-Tax",
+    "taxableLabel": "Taxable",
+    "editableOnPaycheckLabel": "Editable per paycheck",
+    "staticOnPaycheckNote": "Same every paycheck",
+    "totalCompensationTitle": "Total Compensation",
+    "grossSummaryTitle": "Gross Summary",
+    "perPayPeriodTitle": "Per Pay Period Summary",
+    "perMonthTitle": "Per Month Summary",
+    "fourOhOneKTotalsTitle": "401k Totals",
+    "yearlyTaxesTitle": "Yearly Taxes",
+    "yearlyEmployerContributionsTitle": "Yearly Employer Contributions",
+    "perYearLabel": "Per Year",
+    "perMonthLabel": "Per Month",
+    "perPayPeriodLabel": "Per Pay Period",
+    "netIncomePerYearLabel": "Net Income (Yearly)",
+    "netPayLabel": "Net Pay",
+    "paycheckHistoryTitle": "Paycheck History",
+    "paycheckHistoryEmptyForYear": "No paychecks logged for {year}.",
+    "logPaycheckTitle": "Log Paycheck",
+    "editPaycheckTitle": "Edit Paycheck",
+    "viewPaycheckTitle": "Paycheck Details",
+    "clonePaycheckTitle": "Clone Paycheck",
+    "cloneButton": "Clone",
+    "periodStartLabel": "Period Start",
+    "periodEndLabel": "Period End",
+    "saveButton": "Save",
+    "saveAndNewButton": "Save & New",
+    "paycheckSavedToast": "Paycheck saved.",
+    "quickAddJobLabel": "Job",
+    "quickAddContinueButton": "Continue",
+    "quickAddLoading": "Loading…",
+    "deletePaycheckConfirm": {
+      "title": "Delete this paycheck?",
+      "description": "This removes the recorded paycheck from history. This can't be undone."
+    },
+    "errors": {
+      "jobNotFound": "That job could not be found.",
+      "paycheckNotFound": "That paycheck could not be found.",
+      "invalidTemplate": "Enter valid amounts for the template.",
+      "invalidPaycheck": "Enter valid amounts for the paycheck."
+    }
+  },
+  "tour": {
+    "next": "Next",
+    "previous": "Back",
+    "done": "Done",
+    "helpButtonLabel": "Help & tours",
+    "replayWelcome": "Replay welcome tour",
+    "replayPage": "Tour this page",
+    "welcome": {
+      "plan": {
+        "title": "Plan",
+        "description": "Set a spending target for each category before the month starts, then track progress against it here."
+      },
+      "budget": {
+        "title": "Budget",
+        "description": "Assign every dollar of income to a category for the month, zero-based budgeting style."
+      },
+      "accountsNetWorth": {
+        "title": "Accounts & Net Worth",
+        "description": "Your cash and credit accounts, plus any assets and liabilities you track for net worth, live here in the sidebar."
+      },
+      "addButton": {
+        "title": "Quick add",
+        "description": "Add a transaction, a split, or a paycheck from anywhere in the app, without leaving the page you're on."
+      },
+      "userMenu": {
+        "title": "Your account",
+        "description": "Personal settings, tax & retirement info, jobs, API tokens, and notification preferences all live here."
+      },
+      "settings": {
+        "title": "Budget settings",
+        "description": "Manage this budget's categories, accounts, payee renaming rules, repeating transactions, and audit log."
+      },
+      "mobileBudgetSwitcher": {
+        "title": "Switch budgets",
+        "description": "Tap here to switch between households and budgets you have access to."
+      },
+      "mobileTabBar": {
+        "title": "Get around",
+        "description": "Dashboard, Accounts, and Budget are always one tap away at the bottom of the screen."
+      },
+      "mobileMore": {
+        "title": "Everything else",
+        "description": "Plan, Net Worth, Reports, and Settings all live under More."
+      }
+    }
+  }
+}

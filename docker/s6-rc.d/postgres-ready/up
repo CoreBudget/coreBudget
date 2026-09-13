@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+if [ -n "$DATABASE_URL" ]; then
+  exit 0
+fi
+
+export PATH="/usr/lib/postgresql/18/bin:$PATH"
+
+until pg_isready -h 127.0.0.1 -p 5432 -q; do
+  sleep 1
+done
