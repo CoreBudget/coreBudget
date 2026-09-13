@@ -1,0 +1,73 @@
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    groups:
+      mui:
+        patterns:
+          - "@mui/*"
+          - "@emotion/*"
+      prisma:
+        patterns:
+          - "@prisma/*"
+          - "prisma"
+      next-react:
+        patterns:
+          - "next"
+          - "react"
+          - "react-dom"
+          - "eslint-config-next"
+      testing:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+          - "@playwright/test"
+          - "playwright"
+      linting-formatting:
+        patterns:
+          - "eslint*"
+          - "prettier*"
+          - "lint-staged"
+          - "husky"
+          - "@commitlint/*"
+          - "commitlint*"
+          - "commit-and-tag-version"
+          - "knip"
+      types:
+        patterns:
+          - "@types/*"
+      minor-patch:
+        applies-to: version-updates
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    groups:
+      docker:
+        patterns:
+          - "*"
