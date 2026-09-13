@@ -1,7 +1,7 @@
 # CoreBudget: a single, all-in-one self-hosting image. The built Next.js app and an embedded
 # PostgreSQL server in one container, supervised by s6-overlay.
 
-FROM node:24-bookworm-slim AS builder
+FROM node:26-bookworm-slim AS builder
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
@@ -10,7 +10,7 @@ RUN npx prisma generate
 RUN npm run build
 
 
-FROM node:24-bookworm-slim AS runtime
+FROM node:26-bookworm-slim AS runtime
 
 ARG PG_MAJOR=18
 ARG S6_OVERLAY_VERSION=3.2.0.2
