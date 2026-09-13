@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import { getPlatformSettings } from "@/lib/platform";
 import { decrypt } from "@/lib/crypto";
 import { logger } from "@/lib/logger";
+import { renderEmail } from "@/lib/emailTemplate";
 
 async function sendMail(opts: { to: string; subject: string; text: string; html: string }) {
   const settings = await getPlatformSettings();
@@ -44,7 +45,13 @@ export function sendInviteEmail(to: string, name: string, acceptUrl: string) {
     to,
     subject: "You've been invited to CoreBudget",
     text: `Hi ${name},\n\nYou've been invited to join CoreBudget. Complete your account setup:\n${acceptUrl}\n\nThis link expires in 7 days.`,
-    html: `<p>Hi ${name},</p><p>You've been invited to join CoreBudget. Complete your account setup:</p><p><a href="${acceptUrl}">${acceptUrl}</a></p><p>This link expires in 7 days.</p>`,
+    html: renderEmail({
+      preheader: "You've been invited to join CoreBudget.",
+      heading: "You're invited to CoreBudget",
+      bodyHtml: `<p>Hi ${name},</p><p>You've been invited to join CoreBudget. Complete your account setup to get started.</p><p>This link expires in 7 days.</p>`,
+      ctaLabel: "Complete account setup",
+      ctaUrl: acceptUrl,
+    }),
   });
 }
 
@@ -53,6 +60,12 @@ export function sendPasswordResetEmail(to: string, name: string, resetUrl: strin
     to,
     subject: "Reset your CoreBudget password",
     text: `Hi ${name},\n\nAn administrator has requested a password reset for your account:\n${resetUrl}\n\nThis link expires in 1 hour and can only be used once.`,
-    html: `<p>Hi ${name},</p><p>An administrator has requested a password reset for your account:</p><p><a href="${resetUrl}">${resetUrl}</a></p><p>This link expires in 1 hour and can only be used once.</p>`,
+    html: renderEmail({
+      preheader: "Reset your CoreBudget password.",
+      heading: "Reset your password",
+      bodyHtml: `<p>Hi ${name},</p><p>An administrator has requested a password reset for your account.</p><p>This link expires in 1 hour and can only be used once.</p>`,
+      ctaLabel: "Reset password",
+      ctaUrl: resetUrl,
+    }),
   });
 }
