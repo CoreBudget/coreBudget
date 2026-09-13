@@ -63,9 +63,9 @@
     "geoip-lite": "^2.0.3",
     "iron-session": "^9.0.1",
     "next": "16.3.4",
-    "next-intl": "^4.14.2",
+    "next-intl": "^4.14.3",
     "node-cron": "^4.6.0",
-    "nodemailer": "^10.0.0",
+    "nodemailer": "^10.0.3",
     "otplib": "^13.5.0",
     "pg": "^8.23.0",
     "pino": "^10.3.1",
@@ -75,14 +75,14 @@
     "react-dom": "19.2.8",
     "serwist": "^9.5.12",
     "web-push": "^3.6.7",
-    "zod": "^4.5.4"
+    "zod": "^4.6.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.2",
     "@commitlint/config-conventional": "^21.2.2",
     "@playwright/test": "^1.63.0",
     "@types/geoip-lite": "^1.4.4",
-    "@types/node": "^26.4.1",
+    "@types/node": "^26.5.1",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
