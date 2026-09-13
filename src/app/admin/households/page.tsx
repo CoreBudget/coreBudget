@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth/guards";
-import { Feature } from "@/generated/prisma/client";
 import { getPagePreference } from "@/lib/pagePreferences";
 import HouseholdsPanel from "./HouseholdsPanel";
+import { PER_BUDGET_FEATURES } from "./featureLabels";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -32,7 +32,7 @@ export default async function HouseholdsPage({
 
   const selectedId = h ?? households[0]?.id;
   const usersById = new Map(users.map((u) => [u.id, u]));
-  const perBudgetFeatures = Object.values(Feature).filter((f) => f !== Feature.income_calculator);
+  const perBudgetFeatures = PER_BUDGET_FEATURES;
 
   let selected = null;
   if (selectedId) {

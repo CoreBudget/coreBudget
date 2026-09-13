@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth/guards";
 import { Feature, PermissionLevel } from "@/generated/prisma/client";
 import { logAudit } from "@/lib/auditLog";
+import { PER_BUDGET_FEATURES } from "./featureLabels";
 
 export interface FormResult {
   error?: string;
@@ -131,7 +132,7 @@ export async function revokeBudgetAccessAction(budgetId: string, userId: string)
   });
 }
 
-const permissionsSchema = z.record(z.enum(Feature), z.enum(PermissionLevel));
+const permissionsSchema = z.record(z.enum(PER_BUDGET_FEATURES), z.enum(PermissionLevel));
 
 export async function savePermissionsAction(
   budgetId: string,

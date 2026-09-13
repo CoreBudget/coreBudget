@@ -1,7 +1,16 @@
 import type { useTranslations } from "next-intl";
+import { Feature } from "@/generated/prisma/client";
 import { td } from "@/lib/i18n/translateDynamicKey";
 
 type Translate = ReturnType<typeof useTranslations>;
+
+/// Per-budget, per-user grantable features. income_calculator is a platform-wide toggle
+/// (see admin/features), not a FeaturePermission, so it is deliberately excluded here; this is
+/// the single source of truth other than the schema, used by both the permission matrix UI and
+/// the savePermissionsAction validation so the two can't drift apart.
+export const PER_BUDGET_FEATURES = Object.values(Feature).filter(
+  (f) => f !== Feature.income_calculator,
+);
 
 const FEATURE_LABEL_KEYS: Record<string, string> = {
   transactions: "admin.households.features.transactions",
