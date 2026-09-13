@@ -29,13 +29,18 @@ async function sendMail(opts: { to: string; subject: string; text: string; html:
       : undefined,
   });
 
-  await transport.sendMail({
-    from: settings.smtpFromAddress,
-    to: opts.to,
-    subject: opts.subject,
-    text: opts.text,
-    html: opts.html,
-  });
+  try {
+    await transport.sendMail({
+      from: settings.smtpFromAddress,
+      to: opts.to,
+      subject: opts.subject,
+      text: opts.text,
+      html: opts.html,
+    });
+  } catch (err) {
+    logger.error({ err, to: opts.to, subject: opts.subject }, "Failed to send email via SMTP");
+    return { sent: false as const };
+  }
 
   return { sent: true as const };
 }
