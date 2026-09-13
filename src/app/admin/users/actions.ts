@@ -62,6 +62,23 @@ export async function resetTwoFactorAction(userId: string): Promise<void> {
   });
 }
 
+export async function resendInviteAction(
+  userId: string,
+): Promise<{ emailSent: boolean; acceptUrl: string }> {
+  const admin = await requireAdmin();
+  const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } });
+  if (user.status !== "invited") {
+    throw new Error("admin.users.errors.notInvited");
+  }
+
+  await prisma.userInvite.updateMany({
+    where: { email: user.email, status: "pending" },
+    data: { status: "expired" },
+  });
+
+  return createInvite({ email: user.email, name: user.name, invitedByUserId: admin.id });
+}
+
 export async function toggleUserStatusAction(userId: string): Promise<void> {
   const admin = await requireAdmin();
   if (userId === admin.id) {

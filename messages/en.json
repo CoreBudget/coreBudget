@@ -655,7 +655,8 @@
       "errors": {
         "nameRequired": "Enter a name.",
         "emailInUse": "A user with that email already exists.",
-        "cannotDeactivateSelf": "You can't deactivate your own account."
+        "cannotDeactivateSelf": "You can't deactivate your own account.",
+        "notInvited": "This user has already accepted their invite."
       },
       "messages": {
         "inviteSent": "Invite sent.",
@@ -678,7 +679,10 @@
         "unknown": "Unknown",
         "loginSuccess": "Success",
         "loginFailed": "Failed"
-      }
+      },
+      "resendInvite": "Resend Invite",
+      "resendInviteSent": "Invite resent",
+      "smtpNotConfiguredShareLinkInvite": "SMTP isn't configured. Share this link instead: {acceptUrl}"
     }
   },
   "appShell": {

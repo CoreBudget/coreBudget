@@ -17,16 +17,22 @@ import { useTranslations } from "next-intl";
 import BlockIcon from "@mui/icons-material/Block";
 import CheckIcon from "@mui/icons-material/Check";
 import LockResetIcon from "@mui/icons-material/LockReset";
+import MailOutlineIcon from "@mui/icons-material/MailOutlineOutlined";
 import SecurityIcon from "@mui/icons-material/Security";
 import SectionHeader from "../_shared/SectionHeader";
 import AdminButton from "../_shared/AdminButton";
 import Pill from "../_shared/Pill";
 import { useTokens } from "@/theme";
-import { resetPasswordAction, resetTwoFactorAction, toggleUserStatusAction } from "./actions";
+import {
+  resendInviteAction,
+  resetPasswordAction,
+  resetTwoFactorAction,
+  toggleUserStatusAction,
+} from "./actions";
 import CreateUserDialog from "./CreateUserDialog";
 import { td } from "@/lib/i18n/translateDynamicKey";
 
-type FlashKind = "resetSent" | "twoFactorCleared";
+type FlashKind = "resetSent" | "twoFactorCleared" | "inviteResent";
 
 export interface UserRow {
   id: string;
@@ -73,6 +79,17 @@ export default function UsersTable({
       setFlash((prev) => [...prev, { userId, kind: "resetSent" }]);
       if (!emailSent) {
         setSnackbar(t("admin.users.smtpNotConfiguredShareLink", { resetUrl }));
+      }
+      router.refresh();
+    });
+  }
+
+  function handleResendInvite(userId: string) {
+    startTransition(async () => {
+      const { emailSent, acceptUrl } = await resendInviteAction(userId);
+      setFlash((prev) => [...prev, { userId, kind: "inviteResent" }]);
+      if (!emailSent) {
+        setSnackbar(t("admin.users.smtpNotConfiguredShareLinkInvite", { acceptUrl }));
       }
       router.refresh();
     });
@@ -160,6 +177,18 @@ export default function UsersTable({
                 </TableCell>
                 <TableCell>
                   <Stack direction="row" sx={{ gap: "6px", flexWrap: "wrap" }}>
+                    {u.status === "invited" &&
+                      (flagged(u.id) === "inviteResent" ? (
+                        <Pill label={t("admin.users.resendInviteSent")} color={tokens.green} />
+                      ) : (
+                        <AdminButton
+                          disabled={pending}
+                          startIcon={<MailOutlineIcon sx={{ fontSize: 14 }} />}
+                          onClick={() => handleResendInvite(u.id)}
+                        >
+                          {t("admin.users.resendInvite")}
+                        </AdminButton>
+                      ))}
                     {u.status === "active" &&
                       (flagged(u.id) === "resetSent" ? (
                         <Pill label={t("admin.users.resetLinkSent")} color={tokens.green} />
