@@ -151,7 +151,7 @@ export async function createLiabilityAction(
         interestRate: interestRate ?? null,
         minimumPayment: minimumPayment ?? null,
         paymentDueDay: paymentDueDay ?? null,
-        loanStartDate: loanStartDate ?? null,
+        loanStartDate,
         order: (maxOrder._max.order ?? -1) + 1,
         balanceChanges: { create: { date: new Date(), balance: startingBalance } },
       },

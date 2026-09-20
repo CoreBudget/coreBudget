@@ -181,7 +181,7 @@ export async function autoAssignAction(
         ]);
         const currentAssigned = existing ? Number(existing.assigned) : 0;
 
-        let assigned = currentAssigned;
+        let assigned: number;
         if (mode === "underfunded") {
           const target = remainingMonthlyTargetAmount(
             {
