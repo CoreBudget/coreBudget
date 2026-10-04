@@ -5,6 +5,21 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2026-10-04
+
+### Added
+
+- add resend invite to user page in admin ([72efad7](https://github.com/CoreBudget/coreBudget/commit/72efad7984ce841c47f5ef16e97712243d928b64))
+
+### Fixed
+
+- **accounts:** assign a credit card payment category when recording a payment ([965bb05](https://github.com/CoreBudget/coreBudget/commit/965bb058d1896649d0c6f43edcd304b474c7990f)), closes [#18](https://github.com/CoreBudget/coreBudget/issues/18)
+- **budget:** show selection state and clear it with Escape ([994f024](https://github.com/CoreBudget/coreBudget/commit/994f024957508a7ed306cad105b51b629b1e18a3)), closes [#19](https://github.com/CoreBudget/coreBudget/issues/19)
+- build failure from previous fix ([220245d](https://github.com/CoreBudget/coreBudget/commit/220245d206888223c44d72a4b43a9844904c9dc2))
+- logo not showing on login page ([ebbcb64](https://github.com/CoreBudget/coreBudget/commit/ebbcb6466e880d1c0b2a3ed64eb5effe3da35339))
+- save permissions failure ([32f5204](https://github.com/CoreBudget/coreBudget/commit/32f5204f3f2bc5b9f7ba723d9e08be9736423795))
+- sendmailer to better catch errors ([388f50f](https://github.com/CoreBudget/coreBudget/commit/388f50fc41913a2c5a8a2402180eae58b9d649de))
+
 ## [0.1.0] - 2026-09-12
 
 Initial release. Everything below was built before per-commit changelog entries existed, so
