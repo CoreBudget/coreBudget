@@ -11,13 +11,13 @@
     "nextjs",
     "docker"
   ],
-  "homepage": "https://github.com/chiefpansancolt/coreBudget#readme",
+  "homepage": "https://github.com/CoreBudget/coreBudget#readme",
   "bugs": {
-    "url": "https://github.com/chiefpansancolt/coreBudget/issues"
+    "url": "https://github.com/CoreBudget/coreBudget/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chiefpansancolt/coreBudget.git"
+    "url": "git+https://github.com/CoreBudget/coreBudget.git"
   },
   "author": "Christopher Pezza",
   "private": true,
