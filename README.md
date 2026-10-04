@@ -9,8 +9,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/chiefpansancolt/coreBudget/actions/workflows/ci.yml">
-    <img src="https://github.com/chiefpansancolt/coreBudget/actions/workflows/ci.yml/badge.svg" alt="CI status">
+  <a href="https://github.com/CoreBudget/coreBudget/actions/workflows/ci.yml">
+    <img src="https://github.com/CoreBudget/coreBudget/actions/workflows/ci.yml/badge.svg" alt="CI status">
   </a>
   <a href="https://github.com/chiefpansancolt/coreBudget/pkgs/container/corebudget">
     <img src="https://img.shields.io/badge/ghcr.io-corebudget-blue" alt="Docker image">
