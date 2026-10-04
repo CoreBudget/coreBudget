@@ -824,6 +824,7 @@
       "amountLabel": "Amount",
       "submit": "Record Payment",
       "success": "Payment recorded.",
+      "creditCardPaymentsSection": "Credit Card Payments",
       "errors": {
         "fromAccountRequired": "Choose the account this payment is coming from.",
         "sameAccount": "Choose a different account to pay from.",
