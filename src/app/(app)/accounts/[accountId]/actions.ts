@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { Feature, type Prisma } from "@/generated/prisma/client";
 import { requireFeature } from "@/lib/workspace";
@@ -13,6 +14,7 @@ import {
 } from "@/lib/transactions";
 import { logAudit } from "@/lib/auditLog";
 import { stripAmountFormatting } from "@/lib/amount";
+import { findOrCreateCreditCardPaymentCategory } from "@/lib/creditCardPaymentCategory";
 import {
   CADENCE_OPTIONS,
   cadenceToRepeatType,
@@ -231,9 +233,15 @@ export async function recordAccountPaymentAction(
     return { error: "accounts.recordPayment.errors.invalidFromAccount" };
   }
 
-  const [toPayeeId, fromPayeeId] = await Promise.all([
+  const t = await getTranslations();
+  const [toPayeeId, fromPayeeId, categoryId] = await Promise.all([
     findOrCreatePayee(creditAccountName),
     findOrCreatePayee(fromAccount.name),
+    findOrCreateCreditCardPaymentCategory(
+      budgetId,
+      creditAccountName,
+      t("accounts.recordPayment.creditCardPaymentsSection"),
+    ),
   ]);
 
   const postDateObj = new Date(postDate);
@@ -243,6 +251,7 @@ export async function recordAccountPaymentAction(
         accountId: fromAccountId,
         postDate: postDateObj,
         payeeId: toPayeeId,
+        categoryId,
         memo: memo || null,
         debit: amount,
         cleared: false,
@@ -254,6 +263,7 @@ export async function recordAccountPaymentAction(
         accountId: creditAccountId,
         postDate: postDateObj,
         payeeId: fromPayeeId,
+        categoryId,
         memo: memo || null,
         credit: amount,
         cleared: false,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -36,6 +36,7 @@ import {
   type AutoAssignMode,
 } from "./actions";
 import BudgetMobilePanel from "./BudgetMobilePanel";
+import { getCheckState } from "./selectionState";
 
 interface BudgetActivityDetailRow {
   transactionId: string;
@@ -149,6 +150,20 @@ export default function BudgetPanel({
   const [mobilePanelCategoryId, setMobilePanelCategoryId] = useState<string | null>(null);
   const [editingAssignedId, setEditingAssignedId] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (checkedIds.size === 0) return;
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key !== "Escape" || e.defaultPrevented) return;
+      const target = e.target as HTMLElement | null;
+      if (target?.closest("input:not([type=checkbox]), textarea, select, [contenteditable]"))
+        return;
+      if (document.querySelector('[role="dialog"], [role="menu"], [role="listbox"]')) return;
+      setCheckedIds(new Set());
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [checkedIds.size]);
+
   const money = (amount: string | number) => formatCurrency(amount, locale, currencyCode);
 
   function setAllSections(open: boolean) {
@@ -166,7 +181,7 @@ export default function BudgetPanel({
 
   function toggleSectionChecked(section: BudgetSectionRow) {
     const ids = section.categories.map((c) => c.id);
-    const allChecked = ids.length > 0 && ids.every((id) => checkedIds.has(id));
+    const allChecked = getCheckState(ids, checkedIds) === "all";
     setCheckedIds((prev) => {
       const next = new Set(prev);
       ids.forEach((id) => (allChecked ? next.delete(id) : next.add(id)));
@@ -208,6 +223,12 @@ export default function BudgetPanel({
   }
 
   const allCategories = useMemo(() => sections.flatMap((s) => s.categories), [sections]);
+  const allCategoryIds = useMemo(() => allCategories.map((c) => c.id), [allCategories]);
+  const allCheckState = getCheckState(allCategoryIds, checkedIds);
+
+  function toggleAllChecked() {
+    setCheckedIds(allCheckState === "none" ? new Set(allCategoryIds) : new Set());
+  }
   const missingCategories = useMemo(() => allCategories.filter((c) => !c.hasRow), [allCategories]);
   const singleSelectedCategory =
     checkedIds.size === 1 ? (allCategories.find((c) => checkedIds.has(c.id)) ?? null) : null;
@@ -778,7 +799,19 @@ export default function BudgetPanel({
               pb: "8px",
             }}
           >
-            <span />
+            <Checkbox
+              size="small"
+              checked={allCheckState === "all"}
+              indeterminate={allCheckState === "some"}
+              onChange={toggleAllChecked}
+              slotProps={{
+                input: {
+                  "aria-label":
+                    allCheckState === "none" ? t("selectAllCategories") : t("clearSelection"),
+                },
+              }}
+              sx={{ p: 0 }}
+            />
             <Typography
               sx={{ fontSize: 9.5, fontWeight: 600, textTransform: "uppercase" }}
               style={{ color: tokens.textFaint }}
@@ -811,7 +844,7 @@ export default function BudgetPanel({
             <Stack sx={{ gap: "12px" }}>
               {sections.map((section) => {
                 const ids = section.categories.map((c) => c.id);
-                const allChecked = ids.length > 0 && ids.every((id) => checkedIds.has(id));
+                const checkState = getCheckState(ids, checkedIds);
                 const totals = section.categories.reduce(
                   (acc, c) => ({
                     carryover: acc.carryover + Number(c.carryover),
@@ -848,7 +881,8 @@ export default function BudgetPanel({
                         >
                           <Checkbox
                             size="small"
-                            checked={allChecked}
+                            checked={checkState === "all"}
+                            indeterminate={checkState === "some"}
                             onClick={(e) => e.stopPropagation()}
                             onChange={() => toggleSectionChecked(section)}
                             sx={{ p: 0 }}

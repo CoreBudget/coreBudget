@@ -824,6 +824,7 @@
       "amountLabel": "Amount",
       "submit": "Record Payment",
       "success": "Payment recorded.",
+      "creditCardPaymentsSection": "Credit Card Payments",
       "errors": {
         "fromAccountRequired": "Choose the account this payment is coming from.",
         "sameAccount": "Choose a different account to pay from.",
@@ -2027,6 +2028,8 @@
     "missingAssignments": "{count} category missing an assignment this month: {names}",
     "createItButton": "Create it",
     "autoAssignHeading": "{count} selected, Auto Assign:",
+    "selectAllCategories": "Select all categories",
+    "clearSelection": "Clear selection",
     "autoAssignUnderfunded": "Assign underfunded",
     "autoAssignResetAvailable": "Reset available to zero",
     "autoAssignResetAssigned": "Reset assigned to zero",

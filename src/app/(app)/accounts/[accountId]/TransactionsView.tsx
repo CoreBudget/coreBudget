@@ -347,6 +347,21 @@ export default function TransactionsView({
     () => buildCategoryOptions(sections, uncategorizedLabel),
     [sections, uncategorizedLabel],
   );
+  // System categories (such as the hidden credit card payment category) are not in the picker, but
+  // a transaction can still carry one, so the picker needs its name to show the real selection.
+  const hiddenCategoryNames = useMemo(() => {
+    const known = new Set(categoryOptions.map((c) => c.id));
+    const names = new Map<string, string>();
+    for (const row of transactions) {
+      if (row.categoryId && row.categoryName && !known.has(row.categoryId)) {
+        names.set(row.categoryId, row.categoryName);
+      }
+      for (const split of row.splits) {
+        if (!known.has(split.categoryId)) names.set(split.categoryId, split.categoryName);
+      }
+    }
+    return names;
+  }, [transactions, categoryOptions]);
 
   const [addOpen, setAddOpen] = useState(false);
   const [addDraft, setAddDraft] = useState<DraftState>(emptyDraft());
@@ -1162,11 +1177,22 @@ export default function TransactionsView({
   }
 
   function categorySelect(value: string, onChange: (v: string) => void) {
-    const selected = categoryOptions.find((c) => c.id === value) ?? categoryOptions[0];
+    const hiddenName =
+      value && !categoryOptions.some((c) => c.id === value)
+        ? hiddenCategoryNames.get(value)
+        : undefined;
+    const options = hiddenName
+      ? [
+          categoryOptions[0],
+          { id: value, name: hiddenName, group: "" },
+          ...categoryOptions.slice(1),
+        ]
+      : categoryOptions;
+    const selected = options.find((c) => c.id === value) ?? options[0];
     return (
       <Autocomplete
         size="small"
-        options={categoryOptions}
+        options={options}
         groupBy={(option) => option.group}
         getOptionLabel={(option) => option.name}
         isOptionEqualToValue={(option, val) => option.id === val.id}
